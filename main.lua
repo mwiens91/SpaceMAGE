@@ -9,6 +9,7 @@ require "globals"
 -- Game modules
 enemies = require "game.enemies"
 projectiles = require "game.projectiles"
+planets = require "game.planets"
 ship = require "game.mainship"
 space_combat = require "game.space_combat"
 title_menu = require "game.title_menu"

@@ -13,7 +13,7 @@ local ship = {
 }
 
 function ship.get_origin()
-  return ship.xposition + ship.width/2, ship.yposition + ship.height/2
+  return ship.xposition, ship.yposition
 end
 
 function ship.load()

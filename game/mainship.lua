@@ -1,8 +1,8 @@
 local ship = {
   is_loaded = false,
 
-  xposition = 20,
-  yposition = 336,
+  xposition = 30,
+  yposition = GAME_HEIGHT/2,
   rotation = 0,
 
   up_speed_scale = 4,
@@ -36,6 +36,7 @@ end
 -- Updates the ships movement based on key pressed
 function ship.update(dt)
   --print(ship.get_origin())
+
   if love.keyboard.isDown("up") then
     newx = ship.xposition + (math.cos(ship.rotation) * ship.up_speed_scale)
     newy = ship.yposition + (math.sin(ship.rotation) * ship.up_speed_scale)
@@ -71,6 +72,15 @@ function ship.valid_position(x, y)
   else
   	return true
   end
+end
+
+-- Return top left coordinates of hitbox and width and height
+function ship.get_hit_box()
+  x = ship.xposition - ship.width/2
+  y = ship.yposition - ship.height/2
+  width = ship.width
+  height = ship.height
+  return x, y, width, height
 end
 
 return ship

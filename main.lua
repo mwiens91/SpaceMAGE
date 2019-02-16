@@ -54,7 +54,7 @@ function love.draw()
   push:start()
 
   -- Show current state at bottom right
-  love.graphics.print(current_state, 1200, 700)
+  love.graphics.printf(current_state, 0, 700, 1280, "right")
 
   -- Load the draw function for the state we're in
   if states[current_state] ~= nil then

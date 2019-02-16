@@ -7,11 +7,11 @@ suit = require "lib.suit"
 require "globals"
 
 -- Game modules
-enemy = require "game.enemy"
+enemies = require "game.enemies"
+projectiles = require "game.projectiles"
 title_menu = require "game.title_menu"
 ship = require "game.mainship"
 space_combat = require "game.space_combat"
-
 
 function love.load()
   -- Setup screen resolution and upscaling with push

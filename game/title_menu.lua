@@ -6,6 +6,9 @@ local quote_finished = false
 local quote_alpha = 1
 local quote_timer = 0
 local quote_time = 7.69
+local help_message_show = false
+local help_message_timer = 0
+local help_message_time = 3.69 -- time after quote shown
 
 
 -- Clean up this state and move to the next
@@ -27,7 +30,6 @@ function title_menu:update(dt)
     title_menu["music_playing"] = true
   end
 
-  -- Display the quote if necessary
   if not quote_finished then
     -- Keep the quote up for quote_time seconds
     quote_timer = quote_timer + dt
@@ -38,6 +40,14 @@ function title_menu:update(dt)
       else
         quote_alpha = quote_alpha - 0.069
       end
+    end
+  else
+    -- Display a help message help_message_time seconds after the quote
+    -- has gone away
+    help_message_timer = help_message_timer + dt
+
+    if help_message_timer > help_message_time then
+      help_message_show = true
     end
   end
 end
@@ -78,6 +88,17 @@ function title_menu:draw()
     )
 
     love.graphics.setFont(font_default)
+
+    -- Show a help message if we've been in the main menu for a bit
+    if help_message_show then
+      love.graphics.printf(
+        "ゲームを始める ENTER",
+        0,
+        550,
+        1280,
+        "center"
+      )
+    end
   end
 end
 

@@ -108,9 +108,6 @@ function love.draw()
       "left"
     )
 
-    -- DEBUG show game state
-    love.graphics.printf(current_state, 0, GAME_HEIGHT - 20, GAME_WIDTH, "right")
-
     love.graphics.setColor(1, 1, 1, 1)
   end
 

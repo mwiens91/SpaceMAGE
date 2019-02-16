@@ -6,8 +6,8 @@ local space_combat = {
 function space_combat:update(dt)
   -- Start the music
   if not ship["music_playing"] then
-    music["pensive"]:setLooping(true)
-    music["pensive"]:play()
+    music["space_combat"]:setLooping(true)
+    music["space_combat"]:play()
 
     title_menu["music_playing"] = true
   end

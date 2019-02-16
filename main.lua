@@ -36,7 +36,8 @@ function love.load()
   -- Build up a table of music tracks
   music = {}
   music["title"] = love.audio.newSource("media/audio/music/ambient01.ogg", "stream")
-  music["pensive"] = love.audio.newSource("media/audio/music/pensive01.ogg", "stream")
+  music["preparation"] = love.audio.newSource("media/audio/music/pensive01.ogg", "stream")
+  music["space_combat"] = love.audio.newSource("media/audio/music/pensive02.ogg", "stream")
 
   -- Build up a table of SFX
   sfx = {}

@@ -32,21 +32,27 @@ function ship.render()
   ship.draw_ship(ship.xposition, ship.yposition, ship.rotation)
 end
 
-function ship.update_movement()
-  print(ship.get_origin())
-  if love.keyboard.isDown("up") then
-  	xmove = math.cos(ship.rotation) * ship.up_speed_scale
-    ymove = math.sin(ship.rotation) * ship.up_speed_scale
 
-    ship.xposition = ship.xposition + xmove
-    ship.yposition = ship.yposition + ymove
+-- Updates the ships movement based on key pressed
+function ship.update_movement()
+  --print(ship.get_origin())
+  if love.keyboard.isDown("up") then
+    newx = ship.xposition + (math.cos(ship.rotation) * ship.up_speed_scale)
+    newy = ship.yposition + (math.sin(ship.rotation) * ship.up_speed_scale)
+    if (ship.valid_position(newx, newy)) then
+      ship.xposition = newx
+      ship.yposition = newy
+    end
   end
   if love.keyboard.isDown("down") then
-  	xmove = math.cos(ship.rotation) * (ship.up_speed_scale/2)
-    ymove = math.sin(ship.rotation) * (ship.up_speed_scale/2)
 
-    ship.xposition = ship.xposition - xmove
-    ship.yposition = ship.yposition - ymove
+  	newx = ship.xposition - (math.cos(ship.rotation) * ship.up_speed_scale/2)
+    newy = ship.yposition - (math.sin(ship.rotation) * ship.up_speed_scale/2)
+
+    if (ship.valid_position(newx, newy)) then
+      ship.xposition = newx
+      ship.yposition = newy
+    end
   end
 
   if love.keyboard.isDown("left") then
@@ -54,6 +60,16 @@ function ship.update_movement()
   end
   if love.keyboard.isDown("right") then
     ship.rotation = ship.rotation + 0.01 * ship.rot_speed_scale
+  end
+end
+
+-- Checks if position of coordinates exist within the game window
+function ship.valid_position(x, y)
+  if (x > GAME_WIDTH or x < 0 or
+  	  y > GAME_HEIGHT or y < 0) then
+  	return false
+  else
+  	return true
   end
 end
 

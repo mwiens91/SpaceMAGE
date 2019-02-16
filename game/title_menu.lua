@@ -11,4 +11,7 @@ function title_menu:update(dt)
   end
 end
 
+function title_menu:draw()
+end
+
 return title_menu

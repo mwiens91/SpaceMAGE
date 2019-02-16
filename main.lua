@@ -8,6 +8,7 @@ require "globals"
 
 -- Game modules
 enemy = require "game.enemy"
+title_menu = require "game.title_menu"
 
 
 function love.load()
@@ -24,16 +25,27 @@ function love.load()
     }
   )
 
-  -- Other setup here
+  -- Build up table of states
+  states = {}
+  states["title_menu"] = title_menu
+  -- TODO add more states
+  current_state = "title_menu"
+
+  -- DEBUG some text
+  debug_text = "HEY"
 end
 
 function love.update(dt)
+  -- Load the update function for the state we're in
+  if states[current_state] ~= nil then
+    states[current_state]:update(dt)
+  end
 end
 
 function love.draw()
   push:start()
 
-  love.graphics.print("HKLSDFKLDF", 1200, 700)
+  love.graphics.print(current_state, 1200, 700)
 
   push:finish()
 end

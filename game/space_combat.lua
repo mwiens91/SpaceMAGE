@@ -27,4 +27,7 @@ function space_combat:draw()
   projectiles.draw()
 end
 
+function space_combat:keypressed(key)
+end
+
 return space_combat

@@ -63,3 +63,10 @@ function love.draw()
 
   push:finish()
 end
+
+function love.keypressed(key)
+  -- Load the keypressed function for the state we're in
+  if states[current_state] ~= nil then
+    states[current_state]:keypressed(key)
+  end
+end

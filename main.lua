@@ -13,6 +13,7 @@ planets = require "game.planets"
 ship = require "game.mainship"
 space_combat = require "game.space_combat"
 title_menu = require "game.title_menu"
+weapons = require "game.weapons"
 
 
 function love.load()

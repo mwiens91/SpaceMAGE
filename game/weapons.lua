@@ -4,9 +4,10 @@ local weapons = {
   reflector = true,
   stasis = false,
   emp = false,
-  
-  local reflector = {
+
+  reflector = {
     can_deploy = true,
+    deployed = false,
     width = 0,
     height = 0,
 
@@ -15,10 +16,15 @@ local weapons = {
 
     health = 2,
     cooldown = 3, -- seconds till can use again after use
-  }
+    current_cooldown = 3,
+
+    max_time_alive = 2,
+    current_time_alive = 2,
+  },
 }
 
 function weapons.load()
+
   reflector_sprite = love.graphics.newImage("media/img/reflector.png")
   weapons.reflector.width = reflector_sprite:getWidth()
   weapons.reflector.height = reflector_sprite:getHeight()
@@ -26,8 +32,43 @@ function weapons.load()
   weapons.is_loaded = true
 end
 
+function weapons.update(dt)
+  if weapons.reflector.current_cooldown < weapons.reflector.cooldown then
+    weapons.reflector.current_cooldown = weapons.reflector.current_cooldown + dt
+  else
+  	weapons.reflector.can_deploy = true
+  end
+
+  if weapons.reflector.current_time_alive < weapons.reflector.max_time_alive then
+    weapons.reflector.current_time_alive = weapons.reflector.current_time_alive + dt
+  else
+  	weapons.reflector.deployed = false
+  end
+
+end
+
+function weapons.keypressed(key)
+  if key == "space" and weapons.reflector.can_deploy then
+  	-- update position, start a timer to renable can_deploy, set to deployed
+    xpos, ypos = ship.get_origin()
+
+    weapons.reflector.current_time_alive = 0
+    weapons.reflector.current_cooldown = 0
+
+    weapons.reflector.xposition = xpos + 20
+    weapons.reflector.yposition = ypos
+
+  	weapons.reflector.can_deploy = false
+  	weapons.reflector.deployed = true
+  end
+end
+
 function weapons.draw()
-  if weapons.reflector.can_deploy
+  if weapons.reflector.deployed then
+    love.graphics.draw(reflector_sprite, weapons.reflector.xposition,
+    	               weapons.reflector.yposition, 0, 1, 1,
+    	               weapons.reflector.width/2, weapons.reflector.height/2)
+  end
 end
 
 function weapons.draw_reflector()
@@ -52,3 +93,5 @@ end
 
 function weapons.set_emp_permit(value)
 end
+
+return weapons

@@ -25,11 +25,15 @@ function space_combat:update(dt)
   if (not planets.is_loaded) then
     planets.load(1)
   end
+  if (not weapons.is_loaded) then
+    weapons.load()
+  end
 
   ship.update(dt)
   enemies.update(dt)
   projectiles.update(dt)
   planets.update(dt)
+  weapons.update(dt)
 end
 
 function space_combat:draw()
@@ -37,9 +41,11 @@ function space_combat:draw()
   enemies.draw()
   projectiles.draw()
   planets.draw()
+  weapons.draw()
 end
 
 function space_combat:keypressed(key)
+  weapons.keypressed(key)
 end
 
 return space_combat

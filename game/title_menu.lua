@@ -82,7 +82,7 @@ function title_menu:draw()
 end
 
 function title_menu:keypressed(key)
-  if key == "enter" and quote_finished then
+  if key == "return" and quote_finished then
     exit_state()
   end
 end

@@ -9,7 +9,6 @@ local quote_time = 7.69
 local help_message_show = false
 local help_message_timer = 0
 local help_message_time = 3.69 -- time after quote shown
-local side_stats_time = 2
 
 
 -- Clean up this state and move to the next
@@ -49,11 +48,6 @@ function title_menu:update(dt)
 
     if help_message_timer > help_message_time then
       help_message_show = true
-    end
-
-    -- Show side stats too after a few seconds
-    if help_message_timer > side_stats_time then
-      show_side_stats = true
     end
   end
 end

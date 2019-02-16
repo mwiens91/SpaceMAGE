@@ -52,11 +52,18 @@ function love.load()
   font_quote = love.graphics.newFont(FONT_PATH, QUOTE_FONT_SIZE)
   font_title = love.graphics.newFont(FONT_PATH, TITLE_FONT_SIZE)
 
-  -- Variable indicating whether to show stats on the screen
-  show_side_stats = false
+  -- Starting drone counts
+  drone_counts = {
+    drones_attack = 2.734159e7,
+    drones_exploration = 2.1231e6,
+    drones_mining = 3.14159e9,
+  }
 
   -- Load ship
   ship.load()
+
+  -- Variable indicating whether to show stats on the screen
+  show_side_stats = false
 end
 
 function love.update(dt)
@@ -69,14 +76,42 @@ end
 function love.draw()
   push:start()
 
-  -- Show stats around the screen
-  if show_side_stats then
-    love.graphics.printf(current_state, 0, 700, 1280, "right")
-  end
-
   -- Load the draw function for the state we're in
   if states[current_state] ~= nil then
     states[current_state]:draw()
+  end
+
+  -- Show stats around the screen
+  if show_side_stats then
+    love.graphics.setColor(0.7, 0.7, 0.7, 1)
+
+    -- Show drone stats
+    love.graphics.printf(
+      "drones_exploring " .. drone_counts["drones_exploration"],
+      10,
+      GAME_HEIGHT - 300,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "drones_mining " .. drone_counts["drones_mining"],
+      10,
+      GAME_HEIGHT - 275,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "drones_attacking " .. drone_counts["drones_attack"],
+      10,
+      GAME_HEIGHT - 250,
+      GAME_WIDTH,
+      "left"
+    )
+
+    -- DEBUG show game state
+    love.graphics.printf(current_state, 0, GAME_HEIGHT - 20, GAME_WIDTH, "right")
+
+    love.graphics.setColor(1, 1, 1, 1)
   end
 
   push:finish()

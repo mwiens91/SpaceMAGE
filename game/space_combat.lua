@@ -4,6 +4,13 @@ local space_combat = {
 
 -- Space combat state
 function space_combat:update(dt)
+  -- Start the music
+  if not ship["music_playing"] then
+    music["pensive"]:setLooping(true)
+    music["pensive"]:play()
+
+    title_menu["music_playing"] = true
+  end
 
   -- Load main ship
   if (not ship.is_loaded) then

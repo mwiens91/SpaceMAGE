@@ -8,7 +8,9 @@ ENEMY_SHIP_COLOR = {1.0, 1.0, 1.0}
 
 function enemies.load()
   enemies.init()
-  enemies.enemy_init(500,300)
+  enemies.enemy_init(700,300)
+  enemies.enemy_init(500,500)
+  enemies.enemy_init(300,100)
   enemies.is_loaded = true
 end
 

@@ -109,6 +109,8 @@ function title_menu:keypressed(key)
 
     -- Leave this state
     exit_state()
+  elseif key == "return" and not quote_finished then
+    quote_finished = true
   end
 end
 

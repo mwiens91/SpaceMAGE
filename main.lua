@@ -11,7 +11,7 @@ push:setupScreen(
   windowWidth,
   windowHeight,
   {
-    fullscreen = false,
+    fullscreen = true,
     resizable = true
   }
 )

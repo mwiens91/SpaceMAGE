@@ -39,8 +39,10 @@ function love.load()
   music["title"] = love.audio.newSource("media/audio/ambient01.ogg", "stream")
 
   -- Load the main font
-  font_default = love.graphics.newFont("media/fonts/PTM55FT.ttf", DEFAULT_FONT_SIZE)
-  font_quote = love.graphics.newFont("media/fonts/PTM55FT.ttf", QUOTE_FONT_SIZE)
+  font_default = love.graphics.newFont(FONT_PATH, DEFAULT_FONT_SIZE)
+  font_quote = love.graphics.newFont(FONT_PATH, QUOTE_FONT_SIZE)
+  font_title = love.graphics.newFont(FONT_PATH, TITLE_FONT_SIZE)
+  font_title_menu = love.graphics.newFont(FONT_PATH, TITLE_MENU_FONT_SIZE)
 end
 
 function love.update(dt)

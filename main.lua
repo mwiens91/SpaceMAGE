@@ -9,9 +9,9 @@ require "globals"
 -- Game modules
 enemies = require "game.enemies"
 projectiles = require "game.projectiles"
-title_menu = require "game.title_menu"
 ship = require "game.mainship"
 space_combat = require "game.space_combat"
+title_menu = require "game.title_menu"
 
 function love.load()
   -- Setup screen resolution and upscaling with push
@@ -31,7 +31,6 @@ function love.load()
   states = {}
   states["title_menu"] = title_menu
   states["space_combat"] = space_combat
-  -- TODO add more states
   current_state = "title_menu"
 
   -- Build up a table of music tracks

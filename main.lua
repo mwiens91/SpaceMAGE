@@ -35,7 +35,13 @@ function love.load()
 
   -- Build up a table of music tracks
   music = {}
-  music["title"] = love.audio.newSource("media/audio/ambient01.ogg", "stream")
+  music["title"] = love.audio.newSource("media/audio/music/ambient01.ogg", "stream")
+
+  -- Build up a table of SFX
+  sfx = {}
+  sfx["menu_long_01"] = love.audio.newSource("media/audio/sfx/menu_long_01.ogg", "static")
+  sfx["menu_short_01"] = love.audio.newSource("media/audio/sfx/menu_short_01.ogg", "static")
+  sfx["menu_short_02"] = love.audio.newSource("media/audio/sfx/menu_short_02.ogg", "static")
 
   -- Load the main font
   font_default = love.graphics.newFont(FONT_PATH, DEFAULT_FONT_SIZE)

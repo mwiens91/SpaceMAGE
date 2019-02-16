@@ -83,6 +83,10 @@ end
 
 function title_menu:keypressed(key)
   if key == "return" and quote_finished then
+    -- Play a menu sound
+    sfx["menu_long_01"]:play()
+
+    -- Leave this state
     exit_state()
   end
 end

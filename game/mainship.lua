@@ -10,6 +10,8 @@ local ship = {
 
   width = 0,
   height = 0,
+
+  health = 100,
 }
 
 function ship.get_origin()
@@ -81,6 +83,11 @@ function ship.get_hit_box()
   width = ship.width
   height = ship.height
   return x, y, width, height
+end
+
+-- Ship took damage from something
+function ship.got_hit(damage)
+  ship.health = ship.health - damage
 end
 
 return ship

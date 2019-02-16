@@ -1,8 +1,10 @@
 lume = require "lib.lume.lume"
 push = require "lib.push.push"
 suit = require "lib.suit"
+enemy = require "game.enemy"
 
 function love.load()
+	require "globals"
   -- Setup screen resolution and upscaling with push
   local window_width, window_height = love.window.getDesktopDimensions()
 

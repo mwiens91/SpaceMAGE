@@ -2,7 +2,6 @@
 lume = require "lib.lume.lume"
 push = require "lib.push.push"
 suit = require "lib.suit"
-ship = require "game.mainship"
 
 -- Load up global variables
 require "globals"
@@ -26,7 +25,6 @@ function love.load()
     }
   )
 
-
   -- Build up table of states
   states = {}
   states["title_menu"] = title_menu
@@ -39,9 +37,6 @@ function love.load()
 
   -- DEBUG some text
   debug_text = "HEY"
-
-  -- Ship load
-  ship.load()
 end
 
 function love.update(dt)
@@ -49,8 +44,6 @@ function love.update(dt)
   if states[current_state] ~= nil then
     states[current_state]:update(dt)
   end
-
-  ship.update_movement()
 end
 
 function love.draw()
@@ -58,7 +51,6 @@ function love.draw()
 
   love.graphics.print(current_state, 1200, 700)
 
-  ship.render()
 
   push:finish()
 end

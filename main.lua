@@ -42,7 +42,6 @@ function love.load()
   font_default = love.graphics.newFont(FONT_PATH, DEFAULT_FONT_SIZE)
   font_quote = love.graphics.newFont(FONT_PATH, QUOTE_FONT_SIZE)
   font_title = love.graphics.newFont(FONT_PATH, TITLE_FONT_SIZE)
-  font_title_menu = love.graphics.newFont(FONT_PATH, TITLE_MENU_FONT_SIZE)
 end
 
 function love.update(dt)

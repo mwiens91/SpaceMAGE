@@ -24,7 +24,7 @@ function title_menu:update(dt)
     quote_timer = quote_timer + dt
 
     if quote_timer > quote_time then
-      if quote_alpha == 0 then
+      if quote_alpha <= 0 then
         quote_displayed = true
       else
         quote_alpha = quote_alpha - 0.069
@@ -34,8 +34,8 @@ function title_menu:update(dt)
 end
 
 function title_menu:draw()
-  -- Draw the quote if necessary
   if not quote_displayed then
+    -- Draw the quote
     love.graphics.setFont(font_quote)
     love.graphics.setColor(1, 1, 1, quote_alpha)
 
@@ -54,7 +54,21 @@ function title_menu:draw()
       "center"
     )
 
-    love.graphics.setNewFont(DEFAULT_FONT_SIZE)
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.setFont(font_default)
+  else
+    -- Draw the title screen menu
+    love.graphics.setFont(font_title)
+
+    love.graphics.printf(
+      "space_MAGE_",
+      0,
+      300,
+      1280,
+      "center"
+    )
+
+    love.graphics.setFont(font_default)
   end
 end
 

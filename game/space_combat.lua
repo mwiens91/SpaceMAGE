@@ -16,13 +16,13 @@ function space_combat:update(dt)
     projectiles.load()
   end
 
-  ship.update_movement()
+  ship.update(dt)
   enemies.update(dt)
   projectiles.update(dt)
 end
 
 function space_combat:draw()
-  ship.render()
+  ship.draw()
   enemies.draw()
   projectiles.draw()
 end

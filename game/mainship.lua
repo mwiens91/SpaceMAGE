@@ -28,13 +28,13 @@ function ship.draw_ship(x, y, r)
   love.graphics.draw(ship_sprite, x, y, r, 1, 1, ship.width/2, ship.height/2)
 end
 
-function ship.render()
+function ship.draw()
   ship.draw_ship(ship.xposition, ship.yposition, ship.rotation)
 end
 
 
 -- Updates the ships movement based on key pressed
-function ship.update_movement()
+function ship.update(dt)
   --print(ship.get_origin())
   if love.keyboard.isDown("up") then
     newx = ship.xposition + (math.cos(ship.rotation) * ship.up_speed_scale)

@@ -1,0 +1,9 @@
+[submodule "lib/push"]
+	path = lib/push
+	url = https://github.com/Ulydev/push
+[submodule "lib/suit"]
+	path = lib/suit
+	url = git@github.com:vrld/suit.git
+[submodule "lib/lume"]
+	path = lib/lume
+	url = git@github.com:rxi/lume.git

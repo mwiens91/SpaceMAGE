@@ -2,16 +2,26 @@ local ship = {
 	xposition = 20,
 	yposition = 336,
 	rotation = 0,
+
 	up_speed_scale = 4,
 	rot_speed_scale = 7,
+
+	width = 0,
+	height = 0,
 }
 
+function ship.get_origin()
+  return ship.xposition + ship.width/2, ship.yposition + ship.height/2
+end
+
 function ship.load()
-  ship_sprite = love.graphics.newImage("img/shiptest.png")
+  ship_sprite = love.graphics.newImage("media/img/shiptest.png")
+  ship.width = ship_sprite:getWidth()
+  ship.height = ship_sprite:getHeight()
 end
 
 function ship.draw_ship(x, y, r)
-  love.graphics.draw(ship_sprite, x, y, r, 1, 1, ship_sprite:getWidth()/2, ship_sprite:getHeight()/2)
+  love.graphics.draw(ship_sprite, x, y, r, 1, 1, ship.width/2, ship.height/2)
 end
 
 function ship.render()
@@ -19,7 +29,7 @@ function ship.render()
 end
 
 function ship.update_movement()
-  
+  print(ship.get_origin())
   if love.keyboard.isDown("up") then
   	xmove = math.cos(ship.rotation) * ship.up_speed_scale
     ymove = math.sin(ship.rotation) * ship.up_speed_scale

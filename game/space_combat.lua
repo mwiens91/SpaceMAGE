@@ -13,6 +13,9 @@ function space_combat:update(dt)
   end
 
   -- Load main ship
+  if (not planets.is_loaded) then
+    planets.load(1)
+  end
   if (not ship.is_loaded) then
   	ship.load()
   end
@@ -22,25 +25,22 @@ function space_combat:update(dt)
   if (not projectiles.is_loaded) then
     projectiles.load()
   end
-  if (not planets.is_loaded) then
-    planets.load(1)
-  end
   if (not weapons.is_loaded) then
     weapons.load()
   end
 
+  planets.update(dt)
   ship.update(dt)
   enemies.update(dt)
   projectiles.update(dt)
-  planets.update(dt)
   weapons.update(dt)
 end
 
 function space_combat:draw()
+  planets.draw()
   ship.draw()
   enemies.draw()
   projectiles.draw()
-  planets.draw()
   weapons.draw()
 end
 

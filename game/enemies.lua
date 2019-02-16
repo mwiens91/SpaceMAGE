@@ -26,12 +26,18 @@ function enemies.update(dt)
   end
 
 
-  --main_x, main_y = ship.get_origin()
 
 end
 
 function enemies.shoot(enemy)
-  rotation = enemy.rotation-enemies.shot_error/2 + math.random()*enemies.shot_error
+  main_x, main_y = ship.get_origin()
+  local diff_x = main_x - enemy.x
+  local diff_y = main_y - enemy.y
+  local rotation = math.atan(diff_y/diff_x)
+  if diff_x < 0 then
+    rotation = rotation + math.pi
+  end
+  --rotation = rotation-enemies.shot_error/2 + math.random()*enemies.shot_error
   projectiles.projectile_init(enemy.x, enemy.y, rotation, enemy.shot_speed)
 end
 

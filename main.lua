@@ -9,6 +9,8 @@ require "globals"
 -- Game modules
 enemy = require "game.enemy"
 title_menu = require "game.title_menu"
+ship = require "game.mainship"
+space_combat = require "game.space_combat"
 
 
 function love.load()
@@ -28,6 +30,7 @@ function love.load()
   -- Build up table of states
   states = {}
   states["title_menu"] = title_menu
+  states["space_combat"] = space_combat
   -- TODO add more states
   current_state = "title_menu"
 

@@ -1,13 +1,15 @@
 local ship = {
-	xposition = 20,
-	yposition = 336,
-	rotation = 0,
+  is_loaded = false,
 
-	up_speed_scale = 4,
-	rot_speed_scale = 7,
+  xposition = 20,
+  yposition = 336,
+  rotation = 0,
 
-	width = 0,
-	height = 0,
+  up_speed_scale = 4,
+  rot_speed_scale = 7,
+
+  width = 0,
+  height = 0,
 }
 
 function ship.get_origin()
@@ -18,6 +20,8 @@ function ship.load()
   ship_sprite = love.graphics.newImage("media/img/shiptest.png")
   ship.width = ship_sprite:getWidth()
   ship.height = ship_sprite:getHeight()
+  
+  ship.is_loaded = true
 end
 
 function ship.draw_ship(x, y, r)

@@ -39,7 +39,7 @@ end
 function ship.update(dt)
   --print(ship.get_origin())
 
-  if love.keyboard.isDown("up") then
+  if love.keyboard.isDown("up") or love.keyboard.isDown("w") then
     newx = ship.xposition + (math.cos(ship.rotation) * ship.up_speed_scale)
     newy = ship.yposition + (math.sin(ship.rotation) * ship.up_speed_scale)
     if (ship.valid_position(newx, newy)) then
@@ -47,21 +47,11 @@ function ship.update(dt)
       ship.yposition = newy
     end
   end
-  if love.keyboard.isDown("down") then
 
-  	newx = ship.xposition - (math.cos(ship.rotation) * ship.up_speed_scale/2)
-    newy = ship.yposition - (math.sin(ship.rotation) * ship.up_speed_scale/2)
-
-    if (ship.valid_position(newx, newy)) then
-      ship.xposition = newx
-      ship.yposition = newy
-    end
-  end
-
-  if love.keyboard.isDown("left") then
+  if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
     ship.rotation = ship.rotation - 0.01 * ship.rot_speed_scale
   end
-  if love.keyboard.isDown("right") then
+  if love.keyboard.isDown("right") or love.keyboard.isDown("d") then
     ship.rotation = ship.rotation + 0.01 * ship.rot_speed_scale
   end
 end

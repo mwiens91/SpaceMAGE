@@ -53,6 +53,9 @@ function love.load()
 
   -- Variable indicating whether to show stats on the screen
   show_side_stats = false
+
+  -- Load ship
+  ship.load()
 end
 
 function love.update(dt)

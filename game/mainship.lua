@@ -11,7 +11,8 @@ local ship = {
   width = 0,
   height = 0,
 
-  health = 100,
+  current_health = 100,
+  max_health = 100,
 }
 
 function ship.get_origin()
@@ -78,6 +79,38 @@ end
 -- Ship took damage from something
 function ship.got_hit(damage)
   ship.health = ship.health - damage
+end
+
+function ship.get_current_health()
+  return ship.current_health
+end
+
+function ship.get_max_health()
+  return ship.max_health
+end
+
+function ship.get_up_speed_scale()
+  return ship.up_speed_scale
+end
+
+function ship.get_rot_speed_scale()
+  return ship.rot_speed_scale
+end
+
+function ship.set_current_health(value)
+  ship.current_health = value
+end
+
+function ship.set_max_health(value)
+  ship.max_health = value
+end
+
+function ship.set_up_speed_scale(value)
+  ship.up_speed_scale = value
+end
+
+function ship.set_rot_speed_scale(value)
+  ship.rot_speed_scale = value
 end
 
 return ship

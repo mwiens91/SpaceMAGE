@@ -19,7 +19,7 @@ function projectiles.projectile_init(x, y, rotation, speed)
   projectile.rotation = rotation
   projectile.speed = speed
   table.insert(all_projectiles, projectile)
-  print("make projectile")
+  --print("make projectile")
 end
 
 function projectiles.update()
@@ -33,7 +33,7 @@ function projectiles.draw()
   for i, proj in ipairs(all_projectiles) do
     love.graphics.setColor(1,1,1)
     love.graphics.rectangle("fill", proj.x, proj.y, 3, 3)
-    print("draw projectile")
+    --print("draw projectile")
   end
 end
 

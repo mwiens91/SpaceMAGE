@@ -37,6 +37,10 @@ function love.load()
   -- Build up a table of music tracks
   music = {}
   music["title"] = love.audio.newSource("media/audio/ambient01.ogg", "stream")
+
+  -- Load the main font
+  font_default = love.graphics.newFont("media/fonts/PTM55FT.ttf", DEFAULT_FONT_SIZE)
+  font_quote = love.graphics.newFont("media/fonts/PTM55FT.ttf", QUOTE_FONT_SIZE)
 end
 
 function love.update(dt)

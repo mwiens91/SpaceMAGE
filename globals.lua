@@ -1,3 +1,7 @@
 -- Game dimensions
 GAME_WIDTH = 1280
 GAME_HEIGHT = 720
+
+-- Font sizes
+DEFAULT_FONT_SIZE = 14
+QUOTE_FONT_SIZE = 35

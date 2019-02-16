@@ -4,17 +4,15 @@ suit = require "lib.suit"
 
 function love.load()
   -- Setup screen resolution and upscaling with push
-  local game_width, game_height = 1280, 720
   local window_width, window_height = love.window.getDesktopDimensions()
 
   push:setupScreen(
-    game_width,
-    game_height,
+    GAME_WIDTH,
+    GAME_HEIGHT,
     window_width,
     window_height,
     {
       fullscreen = true,
-      resizable = true
     }
   )
 

@@ -13,6 +13,7 @@ ship = require "game.mainship"
 space_combat = require "game.space_combat"
 title_menu = require "game.title_menu"
 
+
 function love.load()
   -- Setup screen resolution and upscaling with push
   local window_width, window_height = love.window.getDesktopDimensions()
@@ -49,6 +50,9 @@ function love.load()
   font_default = love.graphics.newFont(FONT_PATH, DEFAULT_FONT_SIZE)
   font_quote = love.graphics.newFont(FONT_PATH, QUOTE_FONT_SIZE)
   font_title = love.graphics.newFont(FONT_PATH, TITLE_FONT_SIZE)
+
+  -- Variable indicating whether to show stats on the screen
+  show_side_stats = false
 end
 
 function love.update(dt)
@@ -61,8 +65,10 @@ end
 function love.draw()
   push:start()
 
-  -- Show current state at bottom right
-  love.graphics.printf(current_state, 0, 700, 1280, "right")
+  -- Show stats around the screen
+  if show_side_stats then
+    love.graphics.printf(current_state, 0, 700, 1280, "right")
+  end
 
   -- Load the draw function for the state we're in
   if states[current_state] ~= nil then

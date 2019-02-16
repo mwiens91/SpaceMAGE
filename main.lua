@@ -34,9 +34,6 @@ function love.load()
   -- Build up a table of music tracks
   music = {}
   music["title"] = love.audio.newSource("media/audio/ambient01.ogg", "stream")
-
-  -- DEBUG some text
-  debug_text = "HEY"
 end
 
 function love.update(dt)

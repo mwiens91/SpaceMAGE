@@ -7,6 +7,7 @@ suit = require "lib.suit"
 require "globals"
 
 -- Game modules
+drones = require "game.drones"
 enemies = require "game.enemies"
 projectiles = require "game.projectiles"
 planets = require "game.planets"
@@ -50,15 +51,9 @@ function love.load()
 
   -- Load the main font
   font_default = love.graphics.newFont(FONT_PATH, DEFAULT_FONT_SIZE)
+  font_log = love.graphics.newFont(FONT_PATH, LOG_FONT_SIZE)
   font_quote = love.graphics.newFont(FONT_PATH, QUOTE_FONT_SIZE)
   font_title = love.graphics.newFont(FONT_PATH, TITLE_FONT_SIZE)
-
-  -- Starting drone counts
-  drone_counts = {
-    drones_attack = 2.734159e7,
-    drones_exploration = 2.1231e6,
-    drones_mining = 3.14159e9,
-  }
 
   -- Load ship
   ship.load()
@@ -88,27 +83,47 @@ function love.draw()
 
     -- Show drone stats
     love.graphics.printf(
-      "drones_exploring " .. drone_counts["drones_exploration"],
+      "drones_exploring " .. drones["drone_counts"]["drones_exploration"],
       10,
       GAME_HEIGHT - 300,
       GAME_WIDTH,
       "left"
     )
     love.graphics.printf(
-      "drones_mining " .. drone_counts["drones_mining"],
+      "drones_mining " .. drones["drone_counts"]["drones_mining"],
       10,
       GAME_HEIGHT - 275,
       GAME_WIDTH,
       "left"
     )
     love.graphics.printf(
-      "drones_attacking " .. drone_counts["drones_attack"],
+      "drones_attacking " .. drones["drone_counts"]["drones_attack"],
       10,
       GAME_HEIGHT - 250,
       GAME_WIDTH,
       "left"
     )
 
+    -- Show drone log
+    love.graphics.setFont(font_log)
+    love.graphics.setColor(0, 1, 0, 1)
+
+    for idx, msg in ipairs(drones["drone_log"]) do
+      love.graphics.printf(
+        ">> " .. msg,
+        10,
+        GAME_HEIGHT - 200 + idx * 25,
+        GAME_WIDTH,
+        "left"
+      )
+
+      if idx == 7 then
+        break
+      end
+    end
+
+
+    love.graphics.setFont(font_default)
     love.graphics.setColor(1, 1, 1, 1)
   end
 

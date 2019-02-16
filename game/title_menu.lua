@@ -8,6 +8,8 @@ function title_menu:update(dt)
   if not title_menu["music_playing"] then
     music["title"]:setLooping(true)
     music["title"]:play()
+
+    title_menu["music_playing"] = true
   end
 end
 

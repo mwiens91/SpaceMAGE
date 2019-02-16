@@ -73,10 +73,4 @@ function ship.valid_position(x, y)
   end
 end
 
-function love.keypressed(key)
-  if (key == "q") then
-  	love.event.quit()
-  end
-end
-
 return ship

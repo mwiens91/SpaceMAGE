@@ -66,6 +66,9 @@ function love.load()
   -- Timer for varying drone numbers
   drone_timer = 0
   drone_cycle = 0.03
+
+  -- Seed drone counts queue
+  drones.seed_drone_count_queue()
 end
 
 function love.update(dt)
@@ -77,6 +80,8 @@ function love.update(dt)
 
     drone_timer = drone_timer - drone_cycle
   end
+
+  drones.update_drone_count_queue()
 
   -- Load the update function for the state we're in
   if states[current_state] ~= nil then
@@ -119,6 +124,22 @@ function love.draw()
       "left"
     )
 
+    -- Do some special formatting for the percentage change of drones
+    local percentage_drone_change = drones.get_total_drone_percentage_change()
+    local percentage_drone_change_str = string.format("%.1f", percentage_drone_change) .. "%"
+
+    if percentage_drone_change >= 0 then
+      percentage_drone_change_str = "+" .. percentage_drone_change_str
+    end
+
+    love.graphics.printf(
+      "drones_DELTA     " .. percentage_drone_change_str,
+      10,
+      GAME_HEIGHT - 225,
+      GAME_WIDTH,
+      "left"
+    )
+
     -- Show drone log
     love.graphics.setFont(font_log)
     love.graphics.setColor(0, 1, 0, 1)
@@ -127,7 +148,7 @@ function love.draw()
       love.graphics.printf(
         ">> " .. msg,
         10,
-        GAME_HEIGHT - 200 + idx * 25,
+        GAME_HEIGHT - 210 + idx * 25,
         GAME_WIDTH,
         "left"
       )

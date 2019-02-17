@@ -47,10 +47,11 @@ end
 function space_combat:draw()
   space_background.draw()
   planets.draw()
+  weapons.draw()
   ship.draw()
   enemies.draw()
   projectiles.draw()
-  weapons.draw()
+  
 end
 
 function space_combat:keypressed(key)

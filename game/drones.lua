@@ -517,6 +517,11 @@ function drones.update_drones()
   -- Regular variance in drone numbers
   drones.regular_variance()
 
+  -- Decay if morale is 0
+  if drones.swarm_morale == 0 then
+    drones.fractionally_increase_population(-0.01)
+  end
+
   -- Drone mission stuff
   drones.update_drone_mission()
 

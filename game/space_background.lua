@@ -46,6 +46,11 @@ function space_background.update(dt)
   for i, rock in ipairs(space_background.asteroids) do
     rock.xposition = rock.xposition + math.cos(rock.rotation) * rock.speed
     rock.yposition = rock.yposition + math.sin(rock.rotation) * rock.speed
+
+    if rock.xposition < 0 or rock.xposition > GAME_WIDTH or
+       rock.yposition < 0 or rock.yposition > GAME_HEIGHT then
+      table.remove(space_background.asteroids, i)
+    end
   end
 end
 

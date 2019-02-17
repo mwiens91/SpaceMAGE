@@ -74,7 +74,7 @@ function love.load()
 
   -- Timer for updating messages
   msg_timer = 0
-  msg_cycle = 1
+  msg_cycle = 0.069
 
   -- Seed drone counts queue and clusters
   drones.seed_drone_count_queue()
@@ -88,23 +88,26 @@ function love.update(dt)
   if drone_timer > drone_cycle then
     drones.regular_variance()
 
+    drones.update_drone_count_queue()
+
     drone_timer = drone_timer - drone_cycle
   end
 
-  msg_timer = msg_timer + dt
+  -- Print messages to the drone log
+  if current_state ~= "title_menu" then
+    msg_timer = msg_timer + dt
 
-  if msg_timer > msg_cycle then
-    local msg = table.remove(drones["drone_backlog"], 1)
+    if msg_timer > msg_cycle then
+      local msg = table.remove(drones["drone_backlog"], 1)
 
-    if not (msg == nil) then
-      drones.push_message(msg)
-    end
-
+      if not (msg == nil) then
+        drones.push_message(msg)
+      end
 
     msg_timer = msg_timer - msg_cycle
-  end
 
-  drones.update_drone_count_queue()
+    end
+  end
 
   -- Load the update function for the state we're in
   if states[current_state] ~= nil then

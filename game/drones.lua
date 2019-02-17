@@ -24,7 +24,7 @@ local drones = {
 }
 
 
--- Push a message to the drone log
+-- Push a message directly to the drone log
 function drones.push_message(msg)
   lume.push(drones["drone_log"], msg)
 
@@ -32,6 +32,7 @@ function drones.push_message(msg)
     table.remove(drones["drone_log"], 1)
   end
 end
+
 
 -- Push a message to the drone backlog
 function drones.push_backlog_message(msg)
@@ -86,25 +87,41 @@ function drones.seed_drone_clusters()
   local num_exploration_clusters = math.floor(num_exploration_drones / DRONE_CLUSTER_SIZE)
   local num_mining_clusters = math.floor(num_mining_drones / DRONE_CLUSTER_SIZE)
 
+  local fealty_messages = {}
+
   for i=1,num_attack_clusters do
+    local cluster_name = name_generation.generate_cluster_name(ATTACK_TYPE)
+
     lume.push(
       drones["drone_clusters"]["clusters_attack"],
-      name_generation.generate_cluster_name(ATTACK_TYPE)
+      cluster_name
     )
+    lume.push(fealty_messages, dialogue_generation.fealty_announcement(cluster_name))
   end
 
   for i=1,num_exploration_clusters do
+    local cluster_name = name_generation.generate_cluster_name(EXPLORE_TYPE)
+
     lume.push(
       drones["drone_clusters"]["clusters_exploration"],
-      name_generation.generate_cluster_name(EXPLORE_TYPE)
+      cluster_name
     )
+    lume.push(fealty_messages, dialogue_generation.fealty_announcement(cluster_name))
   end
 
   for i=1,num_mining_clusters do
+    local cluster_name = name_generation.generate_cluster_name(MINE_TYPE)
+
     lume.push(
       drones["drone_clusters"]["clusters_mining"],
-      name_generation.generate_cluster_name(MINE_TYPE)
+      cluster_name
     )
+    lume.push(fealty_messages, dialogue_generation.fealty_announcement(cluster_name))
+  end
+
+  -- Push fealty messages to the drone backlog
+  for _, msg in ipairs(lume.shuffle(fealty_messages)) do
+    drones.push_backlog_message(msg)
   end
 end
 

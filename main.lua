@@ -129,6 +129,27 @@ function love.draw()
 
     -- Show drone stats
     love.graphics.printf(
+      "SWARM_MORALE    " .. drones["swarm_morale"],
+      10,
+      55,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "SWARM_OBJECTIVE " .. drones["swarm_objective"],
+      10,
+      85,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "SWARM_STRATEGY  " .. drones["swarm_strategy"],
+      10,
+      115,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
       "drones_exploring " .. drones["drone_counts"]["drones_exploration"],
       10,
       GAME_HEIGHT - 300,

@@ -33,7 +33,14 @@ local drones = {
   drone_backlog = {},
 
   -- Remember the last N drone counts drone counts
-  drone_count_queue = {}
+  drone_count_queue = {},
+
+  -- Drone objective and strategy
+  swarm_objective = MAXIMIZE_NULL,
+  swarm_strategy = TIT_FOR_TAT_STRATEGY,
+
+  -- Drone morale
+  swarm_morale = 69,
 }
 
 

@@ -24,15 +24,15 @@ MAX_DRONE_MESSAGES = 7
 
 -- Drone objective functions
 MAXIMIZE_NULL = "null"
-MAXIMIZE_DRONE_POPULATION = "maximize drone population"
-MAXIMIZE_WEAPONS_TECHNOLOGY = "maximize technology"
-MAXIMIZE_SHIP_EFFICACY = "maximize ship statistics"
+MAXIMIZE_DRONE_POPULATION = "maximize_drone_population"
+MAXIMIZE_WEAPONS_TECHNOLOGY = "maximize_technology"
+MAXIMIZE_SHIP_EFFICACY = "maximize_ship_statistics"
 
 -- Drone strategies
 RANDOM_STRATEGY = "random"
 GREEDY_STRATEGY = "greedy"
 CONSERVATIVE_STRATEGY = "conservative"
-TIT_FOR_TAT_STRATEGY = "tit for tat"
+TIT_FOR_TAT_STRATEGY = "tit_for_tat"
 
 -- Characters
 PROPANE_MIKE = "propanemike01"

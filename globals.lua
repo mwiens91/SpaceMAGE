@@ -21,3 +21,6 @@ ATTACK_TYPE = "attack"
 EXPLORE_TYPE = "explore"
 MINE_TYPE = "mine"
 MAX_DRONE_MESSAGES = 7
+
+-- Characters
+PROPANE_MIKE = "propanemike01"

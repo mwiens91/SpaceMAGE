@@ -3,6 +3,11 @@ local prep_menu = {
 }
 
 
+local timer = 0
+local propane_mike_time = 1
+local propane_mike_msg = lume.once(drones.push_message, PROPANE_MIKE .. ": hi")
+
+
 -- Clean up this state and move to the next
 local function exit_state()
   -- Stop the music
@@ -21,7 +26,14 @@ function prep_menu:update(dt)
 
     prep_menu["music_playing"] = true
   end
+
+  timer = timer + dt
+
+  if timer > propane_mike_time then
+    propane_mike_msg()
+  end
 end
+
 
 function prep_menu:draw()
   -- Draw the title screen menu

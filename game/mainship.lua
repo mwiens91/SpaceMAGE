@@ -11,8 +11,8 @@ local ship = {
   width = 0,
   height = 0,
 
-  current_health = 101,
-  max_health = 101,
+  current_health = 103,
+  max_health = 103,
 
   health_timer = 0,
   health_regen = 1, -- health regenerated / second

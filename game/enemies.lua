@@ -5,7 +5,7 @@ local enemies = {
   is_loaded = false,
   shot_error = 0.4,
   images = {"media/img/enemy1.png", "media/img/enemy2.png"},
-  shot_delay = {2, 10,},
+  shot_delay = {2, 8,},
   speed = {1, 1,},
   max_health = {50, 50,},
 

@@ -1,7 +1,7 @@
 local space_combat = {
   music_playing = false,
-  num_laser_ships = 2,
-  num_missile_launchers = 2,
+  num_laser_ships = 5,
+  num_missile_launchers = 5,
   num_snipers = 1,
 }
 

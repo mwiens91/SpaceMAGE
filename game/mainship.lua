@@ -21,7 +21,7 @@ local ship = {
   health_regen = 1, -- health regenerated / second
 
   current_heat = 0,
-  max_heat = 100,
+  max_heat = 40,
 
   heat_timer = 0,
   heat_cycle = 1,

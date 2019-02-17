@@ -40,21 +40,21 @@ function prep_menu:draw()
   love.graphics.setFont(font_menu)
 
   love.graphics.printf(
-    "command [o]",
+    "COMMAND [o]",
     0,
     GAME_HEIGHT - 100,
     GAME_WIDTH - 20,
     "right"
   )
   love.graphics.printf(
-    "connect [n]",
+    "CONNECT [n]",
     0,
     GAME_HEIGHT - 70,
     GAME_WIDTH - 20,
     "right"
   )
   love.graphics.printf(
-    "commence [m]",
+    "COMMENCE [m]",
     0,
     GAME_HEIGHT - 40,
     GAME_WIDTH - 20,

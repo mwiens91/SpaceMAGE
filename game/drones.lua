@@ -42,7 +42,11 @@ local drones = {
   -- Swarm morale
   swarm_morale = 69,
 
-  -- Swarm
+  -- Swarm experience
+  special_weapons_xp = 0,
+  heat_sink_xp = 0,
+  movement_xp = 0,
+  shields_xp = 0,
 }
 
 
@@ -324,6 +328,31 @@ function drones.regular_morale_decay()
 end
 
 
+-- Mission effects
+function drones.update_drone_mission()
+  -- Drone growth
+  local attack_drone_growth = 0
+  local exploration_drone_growth = 0
+  local mining_drone_growth = 0
+  local total_drones = drones.get_total_drones()
+
+  if drones["swarm_objective"] == MAXIMIZE_NULL then
+  elseif drones["swarm_objective"] == MAXIMIZE_DRONE_POPULATION then
+    attack_drone_growth = total_drones * lume.random(0.0003, 0.001)
+    exploration_drone_growth = total_drones * lume.random(0.0003, 0.001)
+    mining_drone_growth = total_drones * lume.random(0.0003, 0.001)
+  else
+    attack_drone_growth = total_drones * lume.random(0.000003, 0.00007)
+    exploration_drone_growth = total_drones * lume.random(0.000003, 0.00007)
+    mining_drone_growth = total_drones * lume.random(0.00003, 0.0007)
+  end
+
+  drones["drone_counts"]["drones_attack"] = drones["drone_counts"]["drones_attack"] + attack_drone_growth
+  drones["drone_counts"]["drones_exploration"] = drones["drone_counts"]["drones_exploration"] + exploration_drone_growth
+  drones["drone_counts"]["drones_mining"] = drones["drone_counts"]["drones_mining"] + mining_drone_growth
+end
+
+
 -- Update drone numbers. This is a general function that calls a bunch
 -- of more specific functions.
 function drones.update_drones()
@@ -332,6 +361,9 @@ function drones.update_drones()
 
   -- Regular variance in drone numbers
   drones.regular_variance()
+
+  -- Drone mission stuff
+  drones.update_drone_mission()
 
   -- Update the drone count queue
   drones.update_drone_count_queue()

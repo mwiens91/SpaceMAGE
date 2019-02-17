@@ -25,6 +25,8 @@ local weapons = {
 
     max_time_alive = 5,
     current_time_alive = 5,
+
+    heat_increase = 14,
   },
 
   stasis = {
@@ -45,6 +47,8 @@ local weapons = {
 
     max_time_alive = 10,
     current_time_alive = 10,
+
+    heat_increase = 21,
   },
 }
 
@@ -127,6 +131,15 @@ function weapons.keypressed(key)
     
     weapons.reflector.current_health = weapons.reflector.max_health
 
+    -- Update heat
+    local new_heat = ship.current_heat + weapons.reflector.heat_increase
+    if new_heat > ship.max_heat then
+      ship.current_health = ship.current_health - (new_heat - ship.max_heat)
+      ship.current_heat = ship.max_heat
+    else
+      ship.current_heat = new_heat
+    end
+
   	weapons.reflector.can_deploy = false
   	weapons.reflector.deployed = true
   end
@@ -139,6 +152,15 @@ function weapons.keypressed(key)
 
     weapons.stasis.xposition = xpos + math.cos(ship.get_rotation()) * 60
     weapons.stasis.yposition = ypos + math.sin(ship.get_rotation()) * 60
+
+    -- Update heat
+    local new_heat = ship.current_heat + weapons.stasis.heat_increase
+    if new_heat > ship.max_heat then
+      ship.current_health = ship.current_health - (new_heat - ship.max_heat)
+      ship.current_heat = ship.max_heat
+    else
+      ship.current_heat = new_heat
+    end
 
     weapons.stasis.can_deploy = false
     weapons.stasis.deployed = true

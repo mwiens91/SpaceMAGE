@@ -7,11 +7,12 @@ suit = require "lib.suit"
 require "globals"
 
 -- Game modules
+collision = require "game.collision"
 drones = require "game.drones"
 enemies = require "game.enemies"
-projectiles = require "game.projectiles"
 planets = require "game.planets"
-collision = require "game.collision"
+prep_menu = require "game.prep_menu"
+projectiles = require "game.projectiles"
 ship = require "game.mainship"
 space_combat = require "game.space_combat"
 title_menu = require "game.title_menu"
@@ -35,13 +36,14 @@ function love.load()
   -- Build up table of states
   states = {}
   states["title_menu"] = title_menu
+  states["prep_menu"] = prep_menu
   states["space_combat"] = space_combat
   current_state = "title_menu"
 
   -- Build up a table of music tracks
   music = {}
   music["title"] = love.audio.newSource("media/audio/music/ambient01.ogg", "stream")
-  music["preparation"] = love.audio.newSource("media/audio/music/pensive01.ogg", "stream")
+  music["menu"] = love.audio.newSource("media/audio/music/pensive01.ogg", "stream")
   music["space_combat"] = love.audio.newSource("media/audio/music/pensive02.ogg", "stream")
 
   -- Build up a table of SFX

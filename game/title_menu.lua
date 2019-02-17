@@ -17,7 +17,7 @@ local function exit_state()
   music["title"]:stop()
 
   -- Set the next state
-  current_state = "space_combat"
+  current_state = "prep_menu"
 end
 
 

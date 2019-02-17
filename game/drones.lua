@@ -78,7 +78,7 @@ function drones.regular_variance()
 
   drones["drone_counts"]["drones_exploration"] = exploration_nums + exploration_fluctuation
 
-  --Mining drones
+  -- Mining drones
   local mining_nums = drones["drone_counts"]["drones_mining"]
   local mining_max_fluctuation = math.floor(mining_nums / 1e5)
   local mining_fluctuation = math.random(

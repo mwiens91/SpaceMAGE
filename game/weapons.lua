@@ -212,7 +212,7 @@ function weapons.reflector.get_hit_box()
     bottomy1 = weapons.reflector.yposition + math.abs(hyp * math.cos(rot))
     topy2 = weapons.reflector.yposition - math.abs(hyp * math.cos(rot))
     bottomy2 = weapons.reflector.yposition
-  elseif lowr > math.pi/2 then
+  elseif lowr >= math.pi/2 then
     leftx1 = weapons.reflector.xposition - math.abs(hyp * math.sin(-rot))
     rightx1 = weapons.reflector.xposition
     leftx2 = weapons.reflector.xposition

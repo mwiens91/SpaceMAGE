@@ -56,17 +56,9 @@ function projectiles.update()
       proj.x = proj.x + math.cos(proj.rotation)*proj.speed
       proj.y = proj.y + math.sin(proj.rotation)*proj.speed
     end
-    if (not projectiles.valid_position(proj.x, proj.y)) then
+    if (not general.valid_position(proj.x, proj.y)) then
       table.remove(projectiles, i)
     end
-  end
-end
-
-function projectiles.valid_position(x, y)
-  if (x > GAME_WIDTH or x < 0 or y > GAME_HEIGHT or y < 0) then
-    return false
-  else
-    return true
   end
 end
 

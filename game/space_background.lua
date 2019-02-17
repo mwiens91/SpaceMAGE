@@ -47,8 +47,7 @@ function space_background.update(dt)
     rock.xposition = rock.xposition + math.cos(rock.rotation) * rock.speed
     rock.yposition = rock.yposition + math.sin(rock.rotation) * rock.speed
 
-    if rock.xposition < 0 or rock.xposition > GAME_WIDTH or
-       rock.yposition < 0 or rock.yposition > GAME_HEIGHT then
+    if not general.valid_position(rock.xposition, rock.yposition) then
       table.remove(space_background.asteroids, i)
     end
   end

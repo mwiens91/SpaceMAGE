@@ -6,6 +6,7 @@ push = require "lib.push.push"
 require "globals"
 
 -- Game modules
+general = require "game.general"
 collision = require "game.collision"
 dialogue_generation = require "game.dialogue_generation"
 drones = require "game.drones"

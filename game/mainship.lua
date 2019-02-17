@@ -59,7 +59,7 @@ function ship.update(dt)
     ship.moving = true
     newx = ship.xposition + (math.cos(ship.rotation) * ship.up_speed_scale)
     newy = ship.yposition + (math.sin(ship.rotation) * ship.up_speed_scale)
-    if (ship.valid_position(newx, newy)) then
+    if (general.valid_position(newx, newy)) then
       ship.xposition = newx
       ship.yposition = newy
     end
@@ -72,16 +72,6 @@ function ship.update(dt)
   end
   if love.keyboard.isDown("right") or love.keyboard.isDown("d") then
     ship.rotation = ship.rotation + 0.01 * ship.rot_speed_scale
-  end
-end
-
--- Checks if position of coordinates exist within the game window
-function ship.valid_position(x, y)
-  if (x > GAME_WIDTH or x < 0 or
-  	  y > GAME_HEIGHT or y < 0) then
-  	return false
-  else
-  	return true
   end
 end
 

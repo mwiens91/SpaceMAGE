@@ -43,7 +43,7 @@ function collision.check_reflector(proj_index)
   if ((cond1 and cond2 and cond3 and cond4) or (cond5 and cond6 and cond7 and cond8)) then
     --print("SHIELD HIT")
     weapons.reflector.got_hit(proj.damage)
-    table.remove(all_projectiles, proj_index)
+    all_projectiles[proj_index].rotation = 2*weapons.reflector.rotation - all_projectiles[proj_index].rotation + math.pi
     return true
   end
   return false

@@ -128,8 +128,13 @@ function love.draw()
     love.graphics.setFont(font_shields)
     love.graphics.setColor(0, 0, 1, 1)
 
+    local shields_percent_str = string.format(
+      "%.2f",
+      ship.get_current_health() / ship.get_max_health() * 100
+    )
+
     love.graphics.printf(
-      "SHIELDS:" .. ship.get_current_health() / ship.get_max_health() * 100 .. "%",
+      "SHIELDS:" .. shields_percent_str .. "%",
       10,
       10,
       GAME_WIDTH,

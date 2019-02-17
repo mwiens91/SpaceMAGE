@@ -69,16 +69,17 @@ end
 
 -- Return top left coordinates of hitbox and width and height
 function ship.get_hit_box()
-  x = ship.xposition - ship.width/2
-  y = ship.yposition - ship.height/2
-  width = ship.width
-  height = ship.height
-  return x, y, width, height
+  leftx = ship.xposition - ship.width/2
+  rightx = ship.xposition + ship.width/2
+  topy = ship.yposition - ship.height/2
+  bottomy = ship.yposition + ship.height/2
+  return leftx, rightx, topy, bottomy
 end
 
 -- Ship took damage from something
 function ship.got_hit(damage)
-  ship.health = ship.health - damage
+  ship.current_health = ship.current_health - damage
+  print(string.format("Health Remaining = %d", ship.current_health))
 end
 
 function ship.get_current_health()

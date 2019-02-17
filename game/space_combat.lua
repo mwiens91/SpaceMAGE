@@ -34,6 +34,7 @@ function space_combat:update(dt)
   enemies.update(dt)
   projectiles.update(dt)
   weapons.update(dt)
+  collision.collision_detection()
 end
 
 function space_combat:draw()

@@ -13,6 +13,7 @@ local weapons = {
 
     xposition = 0,
     yposition = 0,
+    rotation = 0,
 
     health = 2,
     cooldown = 3, -- seconds till can use again after use
@@ -55,8 +56,10 @@ function weapons.keypressed(key)
     weapons.reflector.current_time_alive = 0
     weapons.reflector.current_cooldown = 0
 
-    weapons.reflector.xposition = xpos + 20
-    weapons.reflector.yposition = ypos
+    weapons.reflector.rotation = ship.get_rotation()
+    weapons.reflector.xposition = xpos + math.cos(weapons.reflector.rotation) * 30
+    weapons.reflector.yposition = ypos + math.sin(weapons.reflector.rotation) * 30
+    
 
   	weapons.reflector.can_deploy = false
   	weapons.reflector.deployed = true
@@ -66,7 +69,7 @@ end
 function weapons.draw()
   if weapons.reflector.deployed then
     love.graphics.draw(reflector_sprite, weapons.reflector.xposition,
-    	               weapons.reflector.yposition, 0, 1, 1,
+    	               weapons.reflector.yposition, weapons.reflector.rotation, 1, 1,
     	               weapons.reflector.width/2, weapons.reflector.height/2)
   end
 end

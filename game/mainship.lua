@@ -96,6 +96,10 @@ function ship.got_hit(damage)
   --print(string.format("Health Remaining = %d", ship.current_health))
 end
 
+function ship.get_rotation()
+  return ship.rotation
+end
+
 function ship.get_current_health()
   return ship.current_health
 end

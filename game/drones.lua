@@ -70,7 +70,7 @@ function drones.regular_variance()
 
   -- Exploration drones
   local exploration_nums = drones["drone_counts"]["drones_exploration"]
-  local exploration_max_fluctuation = math.floor(exploration_nums / 100)
+  local exploration_max_fluctuation = math.floor(exploration_nums / 1e5)
   local exploration_fluctuation = math.random(
     -exploration_max_fluctuation,
     exploration_max_fluctuation
@@ -80,7 +80,7 @@ function drones.regular_variance()
 
   --Mining drones
   local mining_nums = drones["drone_counts"]["drones_mining"]
-  local mining_max_fluctuation = math.floor(mining_nums / 100)
+  local mining_max_fluctuation = math.floor(mining_nums / 1e5)
   local mining_fluctuation = math.random(
     -mining_max_fluctuation,
     mining_max_fluctuation

@@ -105,7 +105,8 @@ end
 function title_menu:keypressed(key)
   if key == "return" and quote_finished then
     -- Play a menu sound
-    sfx["menu_long_01"]:play()
+    local menu_sound = sfx["menu_long_01"]:clone()
+    menu_sound:play()
 
     -- Ensure that side stats are shown
     show_side_stats = true

@@ -67,7 +67,8 @@ end
 
 function prep_menu:keypressed(key)
   if key == "m" then
-    sfx["menu_long_01"]:play()
+    prep_menu_sound = sfx["menu_long_01"]:clone()
+    prep_menu_sound:play()
 
     exit_state()
   end

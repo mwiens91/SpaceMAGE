@@ -229,7 +229,7 @@ function love.draw()
       )
     end
 
-    -- Show shields
+    -- Show shields and heat
     love.graphics.setFont(font_shields)
     love.graphics.setColor(0, 0, 1, 1)
 
@@ -237,10 +237,23 @@ function love.draw()
       "%.2f",
       ship.get_current_health() / ship.get_max_health() * 100
     )
+    local heat_percent_str = string.format(
+      "%.2f",
+      ship.get_current_heat() / ship.get_max_heat() * 100
+    )
 
     love.graphics.printf(
       "SHIELDS:" .. shields_percent_str .. "%",
       10,
+      10,
+      GAME_WIDTH,
+      "left"
+    )
+
+    love.graphics.setColor(0.69, 0, 0, 1)
+    love.graphics.printf(
+      "HEAT:" .. heat_percent_str .. "%",
+      290,
       10,
       GAME_WIDTH,
       "left"

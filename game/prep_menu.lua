@@ -158,6 +158,34 @@ function prep_menu:draw()
       GAME_WIDTH,
       "left"
     )
+  elseif menu_state == CONNECT_STATE then
+    -- Draw the menu box
+    love.graphics.setColor(1, 1, 1, 0.5)
+
+    love.graphics.rectangle(
+      "fill",
+      GAME_WIDTH - 500,
+      10,
+      490,
+      140
+    )
+
+    love.graphics.setColor(1, 1, 1, 1)
+
+    love.graphics.printf(
+      "CONNECT",
+      GAME_WIDTH - 490,
+      20,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "[1] " .. PROPANE_MIKE,
+      GAME_WIDTH - 490,
+      50,
+      GAME_WIDTH,
+      "left"
+    )
   end
 
   love.graphics.setFont(font_default)
@@ -223,6 +251,8 @@ function prep_menu:keypressed(key)
     elseif key == "n" then
       menu_state = NULL_STATE
       prep_menu_sound2:play()
+    elseif key == "1" then
+      prep_menu_sound3:play()
     end
   end
 end

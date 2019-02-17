@@ -145,7 +145,7 @@ function ship.set_rot_speed_scale(value)
   ship.rot_speed_scale = value
 end
 
-function ship.get_health_regen(value)
+function ship.set_health_regen(value)
   ship.health_regen = value
 end
 

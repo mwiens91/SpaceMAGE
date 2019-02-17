@@ -13,6 +13,9 @@ local ship = {
 
   current_health = 100,
   max_health = 100,
+
+  health_timer = 0,
+  health_regen = 1, -- health regenerated / second
 }
 
 function ship.get_origin()
@@ -39,6 +42,17 @@ end
 -- Updates the ships movement based on key pressed
 function ship.update(dt)
   --print(ship.get_origin())
+
+  -- Regnerate health per second
+  ship.health_timer = ship.health_timer + dt
+  if ship.health_timer > 1 then
+  	ship.health_timer = 0
+  	if (ship.current_health + ship.health_regen) <= ship.max_health then
+      ship.current_health = (ship.current_health + ship.health_regen)
+    else
+      ship.current_health = ship.max_health
+    end
+  end
 
   if love.keyboard.isDown("up") or love.keyboard.isDown("w") then
     newx = ship.xposition + (math.cos(ship.rotation) * ship.up_speed_scale)
@@ -98,6 +112,10 @@ function ship.get_rot_speed_scale()
   return ship.rot_speed_scale
 end
 
+function ship.get_health_regen()
+  return ship.health_regen
+end
+
 function ship.set_current_health(value)
   ship.current_health = value
 end
@@ -112,6 +130,10 @@ end
 
 function ship.set_rot_speed_scale(value)
   ship.rot_speed_scale = value
+end
+
+function ship.get_health_regen(value)
+  ship.health_regen = value
 end
 
 return ship

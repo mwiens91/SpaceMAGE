@@ -1,9 +1,13 @@
 local enemies = {
+  health_bar_width = 20,
+  health_bar_height = 5,
+  space_between_bar = 5,
   is_loaded = false,
   shot_error = 0.4,
   images = {"media/img/enemy1.png", "media/img/enemy2.png"},
   shot_delay = {1, 10,},
   speed = {1, 1,},
+  max_health = {50, 50,},
 
 }
 
@@ -69,6 +73,8 @@ function enemies.get_hit_box(enemy_index)
 end
 
 function enemies.enemy_init(x, y, e_type)
+  --e_type == 1 are regular laser ships
+  --e_type == 2 are missile ships
   enemy_ship = {}
   enemy_ship.x = x
   enemy_ship.y = y
@@ -78,19 +84,12 @@ function enemies.enemy_init(x, y, e_type)
   enemy_ship.sprite = love.graphics.newImage(img_file)
   enemy_ship.width = enemy_ship.sprite:getWidth()
   enemy_ship.height = enemy_ship.sprite:getHeight()
+  enemy_ship.max_health = enemies.max_health[e_type]
+  enemy_ship.current_health = enemy_ship.max_health
+  enemy_ship.speed = enemies.speed[e_type]
+  enemy_ship.shot_delay = enemies.shot_delay[e_type]
+  enemy_ship.last_shot = 0
 
-  if(e_type == 1) then
-    --regular laser ships
-    enemy_ship.speed = enemies.speed[e_type]
-    enemy_ship.shot_delay = enemies.shot_delay[e_type]
-    enemy_ship.last_shot = 0
-  elseif(e_type == 2) then
-    --missile ships
-    enemy_ship.speed = enemies.speed[e_type]
-    enemy_ship.shot_delay = enemies.shot_delay[e_type]
-    enemy_ship.last_shot = 0
-  end
-  
   table.insert(enemy_ships, enemy_ship)
 
 
@@ -100,6 +99,15 @@ end
 function enemies.draw()
   for i, enemy in ipairs(enemy_ships) do
     love.graphics.draw(enemy.sprite, enemy.x, enemy.y, enemy.rotation, 1, 1, enemy.width/2, enemy.height/2)
+    local left_bar = enemy.x - enemies.health_bar_width/2
+    local top_bar = enemy.y + enemy.height/2 + enemies.space_between_bar
+    local length_filled = enemies.health_bar_width*(enemy.current_health/enemy.max_health)
+    local length_not_filled = enemies.health_bar_width-length_filled
+    love.graphics.setColor(0.0, 1.0, 0.0, 1.0)
+    love.graphics.rectangle("fill", left_bar, top_bar, length_filled, enemies.health_bar_height)
+    love.graphics.setColor(1.0, 0.0, 0.0, 1.0)
+    love.graphics.rectangle("fill", left_bar+length_filled, top_bar, length_not_filled, enemies.health_bar_height)
+
   end
 end
 

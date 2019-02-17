@@ -62,9 +62,22 @@ function love.load()
 
   -- Variable indicating whether to show stats on the screen
   show_side_stats = false
+
+  -- Timer for varying drone numbers
+  drone_timer = 0
+  drone_cycle = 0.03
 end
 
 function love.update(dt)
+  -- Update drone numbers
+  drone_timer = drone_timer + dt
+
+  if drone_timer > drone_cycle then
+    drones.regular_variance()
+
+    drone_timer = drone_timer - drone_cycle
+  end
+
   -- Load the update function for the state we're in
   if states[current_state] ~= nil then
     states[current_state]:update(dt)

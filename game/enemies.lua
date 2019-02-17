@@ -5,7 +5,7 @@ local enemies = {
   is_loaded = false,
   shot_error = 0.4,
   images = {"media/img/enemy1.png", "media/img/enemy2.png"},
-  shot_delay = {1, 5,},
+  shot_delay = {2, 10,},
   speed = {1, 1,},
   max_health = {50, 50,},
 
@@ -70,9 +70,10 @@ function enemies.update(dt)
     enemy.rotation = rotation_to_ship
 
     enemy.last_shot = enemy.last_shot + dt
-    if enemy.last_shot > enemy.shot_delay then
+    if enemy.last_shot > enemy.current_delay then
       enemies.shoot(enemy, rotation_to_ship)
       enemy.last_shot = 0
+      enemy.current_delay = math.random()*enemy.shot_delay
     end
   end
 
@@ -122,6 +123,7 @@ function enemies.enemy_init(x, y, e_type)
   enemy_ship.current_health = enemy_ship.max_health
   enemy_ship.speed = enemies.speed[e_type]
   enemy_ship.shot_delay = enemies.shot_delay[e_type]
+  enemy_ship.current_delay = math.random()*enemy_ship.shot_delay
   enemy_ship.last_shot = 0
 
   table.insert(enemy_ships, enemy_ship)

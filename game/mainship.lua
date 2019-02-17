@@ -53,7 +53,9 @@ end
 -- Updates the ships movement based on key pressed
 function ship.update(dt)
   -- Scrolling
-  ship.update_position()
+  if current_state == "space_combat" then
+    ship.update_position()
+  end
 
   -- Regnerate health per second
   ship.health_timer = ship.health_timer + dt

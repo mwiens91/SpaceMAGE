@@ -1,6 +1,8 @@
 -- Game dimensions
 GAME_WIDTH = 1280
 GAME_HEIGHT = 720
+SCROLLING_SPEED = 0.2
+SCROLL_WIDTH = GAME_WIDTH*3
 
 -- Font stuff
 FONT_PATH = "media/fonts/PTM55FT.ttf"

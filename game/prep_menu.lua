@@ -75,7 +75,7 @@ function prep_menu:draw()
   -- Show the command menu
   if menu_state == COMMAND_STATE then
     -- Draw the menu box
-    love.graphics.setColor(1, 1, 1, 0.5)
+    love.graphics.setColor(1, 1, 1, 0.4)
 
     love.graphics.rectangle(
       "fill",
@@ -160,7 +160,7 @@ function prep_menu:draw()
     )
   elseif menu_state == CONNECT_STATE then
     -- Draw the menu box
-    love.graphics.setColor(1, 1, 1, 0.5)
+    love.graphics.setColor(1, 1, 1, 0.4)
 
     love.graphics.rectangle(
       "fill",

@@ -56,13 +56,12 @@ end
 
 function space_background.draw()
   -- draw all asteroids in table
+  love.graphics.setColor(1,1,1,0.1)
   for i, rock in ipairs(space_background.asteroids) do
   	love.graphics.draw(asteroid_sprite, rock.xposition, rock.yposition, rock.rotation,
   		               rock.scale, rock.scale, rock.width/2, rock.height/2)
   end
 
-  love.graphics.setColor(0, 0, 0, 0.8)
-  love.graphics.rectangle("fill", 0, 0, GAME_WIDTH, GAME_HEIGHT)
 
   love.graphics.setColor(1,1,1,1)
 

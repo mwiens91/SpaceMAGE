@@ -117,6 +117,11 @@ end
 function love.draw()
   push:start()
 
+  -- Modify background
+  love.graphics.setColor(0, 0, 0, 0.8)
+  love.graphics.rectangle("fill", 0, 0, GAME_WIDTH, GAME_HEIGHT)
+  love.graphics.setColor(1, 1, 1, 1)
+
   -- Load the draw function for the state we're in
   if states[current_state] ~= nil then
     states[current_state]:draw()
@@ -124,6 +129,7 @@ function love.draw()
 
   -- Show stats around the screen
   if show_side_stats then
+
     love.graphics.setColor(0.7, 0.7, 0.7, 1)
 
     -- Show drone stats

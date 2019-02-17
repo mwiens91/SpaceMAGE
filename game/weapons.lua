@@ -2,7 +2,7 @@ local weapons = {
   is_loaded = false,
 
   reflector = true,
-  stasis = false,
+  stasis = true,
   emp = false,
 
   reflector = {
@@ -23,6 +23,26 @@ local weapons = {
     max_time_alive = 5,
     current_time_alive = 5,
   },
+
+  stasis = {
+    can_deploy = false,
+    deployed = false,
+    width = 0,
+    height = 0,
+
+    xposition = 0,
+    yposition = 0,
+    rotation = 0,
+
+    current_bullets = 0,
+    max_bullets = 10,
+
+    cooldown = 1,
+    current_cooldown = 1,
+
+    max_time_alive = 10,
+    current_time_alive = 10,
+  },
 }
 
 function weapons.load()
@@ -30,11 +50,20 @@ function weapons.load()
   reflector_sprite = love.graphics.newImage("media/img/reflectorfat.png")
   weapons.reflector.width = reflector_sprite:getWidth()
   weapons.reflector.height = reflector_sprite:getHeight()
+
+  stasis_sprite = love.graphics.newImage("media/img/stasisbig.png")
+  weapons.stasis.width = stasis_sprite:getWidth()
+  weapons.stasis.height = stasis_sprite:getHeight()
   
   weapons.is_loaded = true
 end
 
 function weapons.update(dt)
+  weapons.reflector.update(dt)
+  weapons.stasis.update(dt)
+end
+
+function weapons.reflector.update(dt)
   -- if the reflector's cooldown is done, can deploy can
   if weapons.reflector.current_cooldown < weapons.reflector.cooldown then
     weapons.reflector.current_cooldown = weapons.reflector.current_cooldown + dt
@@ -53,8 +82,25 @@ function weapons.update(dt)
   if weapons.reflector.current_health <= 0 then
   	weapons.reflector.deployed = false
   end
-
 end
+
+function weapons.stasis.update(dt)
+  if weapons.stasis.current_cooldown < weapons.stasis.cooldown then
+    weapons.stasis.current_cooldown = weapons.stasis.current_cooldown + dt
+  else
+  	weapons.stasis.can_deploy = true
+  end
+
+  if weapons.stasis.current_time_alive < weapons.stasis.max_time_alive then
+  	weapons.stasis.current_time_alive = weapons.stasis.current_time_alive + dt
+  else
+    weapons.stasis.deployed = false
+  end
+  if weapons.stasis.deployed then
+    weapons.stasis.rotation = weapons.stasis.rotation + 0.05
+  end
+end
+
 
 function weapons.keypressed(key)
   if key == "space" and weapons.reflector.can_deploy then
@@ -73,9 +119,24 @@ function weapons.keypressed(key)
   	weapons.reflector.can_deploy = false
   	weapons.reflector.deployed = true
   end
+
+  if key == "b" and weapons.stasis.can_deploy then
+    xpos, ypos = ship.get_origin()
+
+    weapons.stasis.current_time_alive = 0
+    weapons.stasis.current_cooldown = 0
+
+    weapons.stasis.xposition = xpos + math.cos(ship.get_rotation()) * 60
+    weapons.stasis.yposition = ypos + math.sin(ship.get_rotation()) * 60
+
+    weapons.stasis.can_deploy = false
+    weapons.stasis.deployed = true
+  end
 end
 
 function weapons.draw()
+
+  -- Draw Reflector
   if weapons.reflector.deployed then
     love.graphics.draw(reflector_sprite, weapons.reflector.xposition,
     	               weapons.reflector.yposition, weapons.reflector.rotation, 1, 1,
@@ -87,6 +148,14 @@ function weapons.draw()
     love.graphics.rectangle("fill", z1, z3, math.abs(z1-z2), math.abs(z3-z4))
     love.graphics.setColor(1,.2,.2,.7)
     love.graphics.rectangle("fill", c1, c3, math.abs(c1-c2), math.abs(c3-c4))
+    love.graphics.setColor(1,1,1,1)
+  end
+
+  -- Draw Stasis
+  if weapons.stasis.deployed then
+    love.graphics.draw(stasis_sprite, weapons.stasis.xposition,
+    	               weapons.stasis.yposition, weapons.stasis.rotation, 1, 1,
+    	               weapons.stasis.width/2, weapons.stasis.height/2)
   end
 end
 

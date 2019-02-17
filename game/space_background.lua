@@ -61,11 +61,10 @@ function space_background.draw()
   		               rock.scale, rock.scale, rock.width/2, rock.height/2)
   end
 
-  local r, g, b, a = love.graphics.getColor()
   love.graphics.setColor(0, 0, 0, 0.8)
   love.graphics.rectangle("fill", 0, 0, GAME_WIDTH, GAME_HEIGHT)
 
-  love.graphics.setColor(r, g, b, a)
+  love.graphics.setColor(1,1,1,1)
 
 end
 

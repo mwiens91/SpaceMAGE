@@ -328,28 +328,144 @@ function drones.regular_morale_decay()
 end
 
 
--- Mission effects
-function drones.update_drone_mission()
+-- Add a percentage increase of drones
+function drones.fractionally_increase_population(frac)
   -- Drone growth
-  local attack_drone_growth = 0
-  local exploration_drone_growth = 0
-  local mining_drone_growth = 0
   local total_drones = drones.get_total_drones()
+  local attack_drone_growth = total_drones * frac
+  local exploration_drone_growth = total_drones * frac
+  local mining_drone_growth = total_drones * frac
 
-  if drones["swarm_objective"] == MAXIMIZE_NULL then
-  elseif drones["swarm_objective"] == MAXIMIZE_DRONE_POPULATION then
-    attack_drone_growth = total_drones * lume.random(0.00003, 0.0001)
-    exploration_drone_growth = total_drones * lume.random(0.00003, 0.0001)
-    mining_drone_growth = total_drones * lume.random(0.00003, 0.0001)
+  local new_attack_population = drones["drone_counts"]["drones_attack"] + attack_drone_growth
+  local new_exploration_population = drones["drone_counts"]["drones_exploration"] + exploration_drone_growth
+  local new_mining_population = drones["drone_counts"]["drones_mining"] + mining_drone_growth
+
+  if new_attack_population <= 0 then
+    drones["drone_counts"]["drones_attack"] = 0
   else
-    attack_drone_growth = total_drones * lume.random(0.0000003, 0.000007)
-    exploration_drone_growth = total_drones * lume.random(0.0000003, 0.000007)
-    mining_drone_growth = total_drones * lume.random(0.000003, 0.00007)
+    drones["drone_counts"]["drones_attack"] = new_attack_population
   end
 
-  drones["drone_counts"]["drones_attack"] = drones["drone_counts"]["drones_attack"] + attack_drone_growth
-  drones["drone_counts"]["drones_exploration"] = drones["drone_counts"]["drones_exploration"] + exploration_drone_growth
-  drones["drone_counts"]["drones_mining"] = drones["drone_counts"]["drones_mining"] + mining_drone_growth
+  if new_exploration_population <= 0 then
+    drones["drone_counts"]["drones_exploration"] = 0
+  else
+    drones["drone_counts"]["drones_exploration"] = new_exploration_population
+  end
+
+  if new_mining_population <= 0 then
+    drones["drone_counts"]["drones_mining"] = 0
+  else
+    drones["drone_counts"]["drones_mining"] = new_mining_population
+  end
+end
+
+
+-- Mission effects
+function drones.update_drone_mission()
+  local swarm_objective = drones["swarm_objective"]
+  local swarm_strategy = drones["swarm_strategy"]
+
+  -- No effects for null objective function
+  if swarm_objective == MAXIMIZE_NULL then
+    return
+  end
+
+  -- Drone population
+  if drones["swarm_strategy"] == RANDOM_STRATEGY then
+    if drones["swarm_objective"] == MAXIMIZE_DRONE_POPULATION then
+      drones.fractionally_increase_population(lume.random(-4e-4, 5e-4))
+    else
+      drones.fractionally_increase_population(lume.random(-6e-4, 1e-5))
+    end
+  elseif drones["swarm_strategy"] == GREEDY_STRATEGY then
+    if drones["swarm_objective"] == MAXIMIZE_DRONE_POPULATION then
+      drones.fractionally_increase_population(lume.random(-2e-4, 3e-4))
+    else
+      drones.fractionally_increase_population(lume.random(-6e-5, -1.5e-5))
+    end
+  elseif drones["swarm_strategy"] == CONSERVATIVE_STRATEGY then
+    if drones["swarm_objective"] == MAXIMIZE_DRONE_POPULATION then
+      drones.fractionally_increase_population(lume.random(0, 1e-4))
+    else
+      drones.fractionally_increase_population(lume.random(-1e-5, 0))
+    end
+  elseif drones["swarm_strategy"] == TIT_FOR_TAT_STRATEGY then
+    if drones["swarm_objective"] == MAXIMIZE_DRONE_POPULATION then
+      drones.fractionally_increase_population(lume.random(0, 2e-4))
+    else
+      drones.fractionally_increase_population(lume.random(-5e-5, 5e-6))
+    end
+  end
+
+  -- Special weapons
+  if drones["swarm_strategy"] == RANDOM_STRATEGY then
+    if drones["swarm_objective"] == MAXIMIZE_WEAPONS_TECHNOLOGY then
+      drones["special_weapons_xp"] = drones["special_weapons_xp"] + lume.random(0, 100)
+    else
+      drones["special_weapons_xp"] = drones["special_weapons_xp"] + lume.random(0, 2)
+    end
+  elseif drones["swarm_strategy"] == GREEDY_STRATEGY then
+    if drones["swarm_objective"] == MAXIMIZE_WEAPONS_TECHNOLOGY then
+      drones["special_weapons_xp"] = drones["special_weapons_xp"] + lume.random(25, 75)
+    else
+      drones["special_weapons_xp"] = drones["special_weapons_xp"] + lume.random(0, 9)
+    end
+  elseif drones["swarm_strategy"] == CONSERVATIVE_STRATEGY then
+    if drones["swarm_objective"] == MAXIMIZE_WEAPONS_TECHNOLOGY then
+      drones["special_weapons_xp"] = drones["special_weapons_xp"] + lume.random(30, 35)
+    else
+      drones["special_weapons_xp"] = drones["special_weapons_xp"] + lume.random(4, 6)
+    end
+  elseif drones["swarm_strategy"] == TIT_FOR_TAT_STRATEGY then
+    if drones["swarm_objective"] == MAXIMIZE_WEAPONS_TECHNOLOGY then
+      drones["special_weapons_xp"] = drones["special_weapons_xp"] + lume.random(40, 60)
+    else
+      drones["special_weapons_xp"] = drones["special_weapons_xp"] + lume.random(1, 10)
+    end
+  end
+
+  -- Special weapons
+  if drones["swarm_strategy"] == RANDOM_STRATEGY then
+    if drones["swarm_objective"] == MAXIMIZE_SHIP_EFFICACY then
+      drones["heat_sink_xp"] = drones["heat_sink_xp"] + lume.random(0, 100)
+      drones["shields_xp"] = drones["shields_xp"] + lume.random(0, 100)
+      drones["movement_xp"] = drones["movement_xp"] + lume.random(0, 100)
+    else
+      drones["heat_sink_xp"] = drones["heat_sink_xp"] + lume.random(0, 2)
+      drones["shields_xp"] = drones["shields_xp"] + lume.random(0, 2)
+      drones["movement_xp"] = drones["movement_xp"] + lume.random(0, 2)
+    end
+  elseif drones["swarm_strategy"] == GREEDY_STRATEGY then
+    if drones["swarm_objective"] == MAXIMIZE_SHIP_EFFICACY then
+      drones["heat_sink_xp"] = drones["heat_sink_xp"] + lume.random(25, 75)
+      drones["shields_xp"] = drones["shields_xp"] + lume.random(25, 75)
+      drones["movement_xp"] = drones["movement_xp"] + lume.random(25, 75)
+    else
+      drones["heat_sink_xp"] = drones["heat_sink_xp"] + lume.random(0, 9)
+      drones["shields_xp"] = drones["shields_xp"] + lume.random(0, 9)
+      drones["movement_xp"] = drones["movement_xp"] + lume.random(0, 9)
+    end
+  elseif drones["swarm_strategy"] == CONSERVATIVE_STRATEGY then
+    if drones["swarm_objective"] == MAXIMIZE_SHIP_EFFICACY then
+      drones["heat_sink_xp"] = drones["heat_sink_xp"] + lume.random(30, 35)
+      drones["shields_xp"] = drones["shields_xp"] + lume.random(30, 35)
+      drones["movement_xp"] = drones["movement_xp"] + lume.random(30, 35)
+    else
+      drones["heat_sink_xp"] = drones["heat_sink_xp"] + lume.random(4, 6)
+      drones["shields_xp"] = drones["shields_xp"] + lume.random(4, 6)
+      drones["movement_xp"] = drones["movement_xp"] + lume.random(4, 6)
+    end
+  elseif drones["swarm_strategy"] == TIT_FOR_TAT_STRATEGY then
+    if drones["swarm_objective"] == MAXIMIZE_WEAPONS_TECHNOLOGY then
+      drones["heat_sink_xp"] = drones["heat_sink_xp"] + lume.random(40, 60)
+      drones["shields_xp"] = drones["shields_xp"] + lume.random(40, 60)
+      drones["movement_xp"] = drones["movement_xp"] + lume.random(40, 60)
+    else
+      drones["heat_sink_xp"] = drones["heat_sink_xp"] + lume.random(1, 10)
+      drones["shields_xp"] = drones["shields_xp"] + lume.random(1, 10)
+      drones["movement_xp"] = drones["movement_xp"] + lume.random(1, 10)
+    end
+  end
 end
 
 

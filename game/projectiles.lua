@@ -2,7 +2,7 @@ local projectiles = {
   is_loaded = false,
   images = {"media/img/projectile1.png", "media/img/projectile2.png",},
   p_damage = {10, 30,},
-  p_speed = {10, 6},
+  p_speed = {10, 4},
 
 }
 
@@ -42,8 +42,20 @@ end
 
 function projectiles.update()
   for i, proj in ipairs(all_projectiles) do
-    proj.x = proj.x + math.cos(proj.rotation)*proj.speed
-    proj.y = proj.y + math.sin(proj.rotation)*proj.speed
+    if(proj.p_type == 1) then
+      proj.x = proj.x + math.cos(proj.rotation)*proj.speed
+      proj.y = proj.y + math.sin(proj.rotation)*proj.speed
+    elseif(proj.p_type == 2) then
+      local diff_x = (ship.xposition - proj.x)
+      local diff_y = (ship.yposition - proj.y)
+      local rotation_to_ship = math.atan(diff_y/diff_x)
+      if diff_x < 0 then
+        rotation_to_ship = rotation_to_ship + math.pi
+      end
+      proj.rotation = rotation_to_ship
+      proj.x = proj.x + math.cos(proj.rotation)*proj.speed
+      proj.y = proj.y + math.sin(proj.rotation)*proj.speed
+    end
   end
 end
 

@@ -75,6 +75,10 @@ function enemies.update(dt)
       enemy.last_shot = 0
       enemy.current_delay = math.random()*enemy.shot_delay
     end
+    enemy.x = enemy.x - SCROLLING_SPEED
+    if enemy.x+enemy.width/2 <= 0 then
+      table.remove(enemy_ships, i)
+    end
   end
 
 

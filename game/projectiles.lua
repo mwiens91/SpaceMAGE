@@ -2,7 +2,7 @@ local projectiles = {
   is_loaded = false,
   images = {"media/img/projectile1.png", "media/img/projectile2.png",},
   p_damage = {5, 15,},
-  p_speed = {10, 4},
+  p_speed = {10, 3},
 
 }
 

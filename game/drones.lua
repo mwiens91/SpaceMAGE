@@ -338,13 +338,13 @@ function drones.update_drone_mission()
 
   if drones["swarm_objective"] == MAXIMIZE_NULL then
   elseif drones["swarm_objective"] == MAXIMIZE_DRONE_POPULATION then
-    attack_drone_growth = total_drones * lume.random(0.0003, 0.001)
-    exploration_drone_growth = total_drones * lume.random(0.0003, 0.001)
-    mining_drone_growth = total_drones * lume.random(0.0003, 0.001)
+    attack_drone_growth = total_drones * lume.random(0.00003, 0.0001)
+    exploration_drone_growth = total_drones * lume.random(0.00003, 0.0001)
+    mining_drone_growth = total_drones * lume.random(0.00003, 0.0001)
   else
-    attack_drone_growth = total_drones * lume.random(0.000003, 0.00007)
-    exploration_drone_growth = total_drones * lume.random(0.000003, 0.00007)
-    mining_drone_growth = total_drones * lume.random(0.00003, 0.0007)
+    attack_drone_growth = total_drones * lume.random(0.0000003, 0.000007)
+    exploration_drone_growth = total_drones * lume.random(0.0000003, 0.000007)
+    mining_drone_growth = total_drones * lume.random(0.000003, 0.00007)
   end
 
   drones["drone_counts"]["drones_attack"] = drones["drone_counts"]["drones_attack"] + attack_drone_growth

@@ -176,21 +176,21 @@ function love.draw()
       "left"
     )
     love.graphics.printf(
-      "drones_exploring " .. drones["drone_counts"]["drones_exploration"],
+      "drones_exploring " .. lume.round(drones["drone_counts"]["drones_exploration"]),
       10,
       GAME_HEIGHT - 300,
       GAME_WIDTH,
       "left"
     )
     love.graphics.printf(
-      "drones_mining    " .. drones["drone_counts"]["drones_mining"],
+      "drones_mining    " .. lume.round(drones["drone_counts"]["drones_mining"]),
       10,
       GAME_HEIGHT - 275,
       GAME_WIDTH,
       "left"
     )
     love.graphics.printf(
-      "drones_attacking " .. drones["drone_counts"]["drones_attack"],
+      "drones_attacking " .. lume.round(drones["drone_counts"]["drones_attack"]),
       10,
       GAME_HEIGHT - 250,
       GAME_WIDTH,

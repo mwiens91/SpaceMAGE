@@ -34,5 +34,8 @@ GREEDY_STRATEGY = "greedy"
 CONSERVATIVE_STRATEGY = "conservative"
 TIT_FOR_TAT_STRATEGY = "tit_for_tat"
 
+-- Swarm XP per level
+XP_PER_LEVEL = 10000
+
 -- Characters
 PROPANE_MIKE = "propanemike01"

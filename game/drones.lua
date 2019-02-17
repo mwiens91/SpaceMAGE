@@ -469,6 +469,35 @@ function drones.update_drone_mission()
 end
 
 
+function drones.update_levels()
+  if drones["heat_sink_xp"] >= XP_PER_LEVEL then
+    -- TODO level up heat sinks once implemented
+
+    drones["heat_sink_xp"] = drones["heat_sink_xp"] -  XP_PER_LEVEL
+  end
+
+  if drones["shields_xp"] >= XP_PER_LEVEL then
+    ship.set_max_health(1.1 * ship.get_current_health())
+    ship.set_health_regen(1.1 * ship.get_health_regen())
+    ship.set_current_health(ship.get_max_health())
+
+    drones["shields_xp"] = drones["shields_xp"] -  XP_PER_LEVEL
+  end
+
+  if drones["movement_xp"] >= XP_PER_LEVEL then
+    -- TODO level up movement once implemented
+
+    drones["movement_xp"] = drones["movement_xp"] -  XP_PER_LEVEL
+  end
+
+  if drones["special_weapons_xp"] >= XP_PER_LEVEL then
+    -- TODO level up special weapons implemented
+
+    drones["special_weapons_xp"] = drones["special_weapons_xp"] -  XP_PER_LEVEL
+  end
+end
+
+
 -- Update drone numbers. This is a general function that calls a bunch
 -- of more specific functions.
 function drones.update_drones()
@@ -480,6 +509,9 @@ function drones.update_drones()
 
   -- Drone mission stuff
   drones.update_drone_mission()
+
+  -- Update swarm levels
+  drones.update_levels()
 
   -- Update the drone count queue
   drones.update_drone_count_queue()

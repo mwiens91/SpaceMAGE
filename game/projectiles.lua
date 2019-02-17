@@ -17,6 +17,8 @@ end
 
 function projectiles.projectile_init(x, y, rotation, p_type)
   projectile = {}
+  projectile.friendly = false
+  projectile.friendly_time = 0.2
   projectile.x = x
   projectile.y = y
   projectile.rotation = rotation
@@ -40,8 +42,13 @@ function projectiles.projectile_init(x, y, rotation, p_type)
 
 end
 
-function projectiles.update()
+function projectiles.update(dt)
   for i, proj in ipairs(all_projectiles) do
+    proj.friendly_time = proj.friendly_time - dt
+    if proj.friendly_time <= 0 then
+      proj.friendly = true
+      proj.friendly_time = 0
+    end
     if(proj.p_type == 1) then
       proj.x = proj.x + math.cos(proj.rotation)*proj.speed
       proj.y = proj.y + math.sin(proj.rotation)*proj.speed

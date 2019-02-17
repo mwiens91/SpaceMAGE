@@ -99,13 +99,32 @@ function enemies.shoot(enemy, rotation_to_ship)
     projectiles.projectile_init(cannon_x, cannon_y, new_rotation, enemy.e_type)
 
   elseif(enemy.e_type == 2) then
-    projectiles.projectile_init(enemy.x, enemy.y, rotation_to_ship, enemy.e_type)
+    local missile_x = enemy.x + enemy.width/2 * math.cos(rotation_to_ship)
+    local missile_y = enemy.y + enemy.width/2 * math.sin(rotation_to_ship)
+    projectiles.projectile_init(missile_x, missile_y, rotation_to_ship, enemy.e_type)
   end
 end
 
 function enemies.get_hit_box(enemy_index)
-  --if statement depending on which enemy
+  enemy = enemy_ships[enemy_index]
+  leftx = enemy.x - enemy.width/2
+  rightx = enemy.x + enemy.width/2
+  topy = enemy.y - enemy.height/2
+  bottomy = enemy.y + enemy.height/2
+  return leftx, rightx, topy, bottomy
 end
+
+-- Enemy ship took damage from something
+function enemies.got_hit(enemy_index, damage)
+  enemy = enemy_ships[enemy_index]
+  enemy.current_health = enemy.current_health - damage
+  if enemy.current_health <= 0 then
+    enemy.current_health = 0
+    table.remove(enemy_ships, enemy_index)
+  end
+  --print(string.format("Health Remaining = %d", enemy.current_health))
+end
+
 
 function enemies.enemy_init(x, y, e_type)
   --e_type == 1 are regular laser ships

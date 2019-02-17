@@ -1,7 +1,20 @@
 local collision = {
 }
 
-function collision.check_enemy_collision(proj, ship)
+function collision.check_enemy_collision(proj_index, enemy_index)
+  enemy_leftx, enemy_rightx, enemy_topy, enemy_bottomy = enemies.get_hit_box(enemy_index)
+  proj_leftx, proj_rightx, proj_topy, proj_bottomy = projectiles.get_hit_box(proj_index)
+  cond1 = enemy_leftx <= proj_rightx
+  cond2 = proj_leftx <= enemy_rightx
+  cond3 = enemy_topy <= proj_bottomy
+  cond4 = proj_topy <= enemy_bottomy
+  if (all_projectiles[proj_index].friendly and cond1 and cond2 and cond3 and cond4) then
+    enemies.got_hit(enemy_index, all_projectiles[proj_index].damage)
+    table.remove(all_projectiles, proj_index)
+    return true
+  end
+  return false
+
 end
 
 function collision.check_main(proj_index)
@@ -12,7 +25,7 @@ function collision.check_main(proj_index)
   cond3 = main_topy <= proj_bottomy
   cond4 = proj_topy <= main_bottomy
   if (cond1 and cond2 and cond3 and cond4) then
-    ship.got_hit(proj.damage)
+    ship.got_hit(all_projectiles[proj_index].damage)
     table.remove(all_projectiles, proj_index)
     return true
   end
@@ -30,7 +43,7 @@ function collision.check_reflector(proj_index)
   cond6 = proj_leftx <= rightx2
   cond7 = topy2 <= proj_bottomy
   cond8 = proj_topy <= bottomy2
-  if weapons.reflector.hit_recover == false and (((cond1 and cond2 and cond3 and cond4) or (cond5 and cond6 and cond7 and cond8))) then
+  if ((cond1 and cond2 and cond3 and cond4) or (cond5 and cond6 and cond7 and cond8)) then
     the_proj = all_projectiles[proj_index]
     print("SHIELD HIT")
     weapons.reflector.got_hit(the_proj.damage)
@@ -49,17 +62,16 @@ end
 function collision.collision_detection()
   proj_hit = false
   for i, proj in ipairs(all_projectiles) do
+    if not proj_hit and weapons.reflector.deployed then
+      proj_hit = collision.check_reflector(i)
+    end
     if not proj_hit then
       proj_hit = collision.check_main(i)
     end
-    if not proj_hit then
-      if weapons.reflector.deployed then
-        proj_hit = collision.check_reflector(i)
-      end
-    end
     for j, enemy in ipairs(enemy_ships) do
-      --if not proj_hit then
-      --check_enemy_collision(proj, enemy)
+      if not proj_hit then
+        proj_hit = collision.check_enemy_collision(i, j)
+      end
     end
     proj_hit = false
   end

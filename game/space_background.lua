@@ -33,7 +33,7 @@ function space_background.update(dt)
 
   	if space_background.asteroid_time > space_background.asteroid_cycle then
       local randgen1 = math.random(1,4)
-      if math.random(1, 4) == 1 then
+      if math.random(1, 2) == 1 then
         space_background.asteroid_init()
         if math.random(1, 4) == 1 then
         	space_background.asteroid_init()

@@ -163,35 +163,63 @@ end
 
 function prep_menu:keypressed(key)
   if key == "m" then
-    prep_menu_sound = sfx["menu_long_01"]:clone()
-    prep_menu_sound:play()
+    local prep_menu_sound1 = sfx["menu_long_01"]:clone()
+    prep_menu_sound1:play()
 
     exit_state()
   end
 
+  local prep_menu_sound2 = sfx["menu_short_01"]:clone()
+  local prep_menu_sound3 = sfx["menu_short_02"]:clone()
+
   if menu_state == NULL_STATE then
     if key == "o" then
       menu_state = COMMAND_STATE
+      prep_menu_sound2:play()
+    end
+    if key == "n" then
+      menu_state = CONNECT_STATE
+      prep_menu_sound2:play()
     end
   elseif menu_state == COMMAND_STATE then
     if key == "o" then
       menu_state = NULL_STATE
+      prep_menu_sound2:play()
+    elseif key == "n" then
+      menu_state = CONNECT_STATE
+      prep_menu_sound2:play()
     elseif key == "1" then
       drones["swarm_objective"] = MAXIMIZE_NULL
+      prep_menu_sound3:play()
     elseif key == "2" then
       drones["swarm_objective"] = MAXIMIZE_DRONE_POPULATION
+      prep_menu_sound3:play()
     elseif key == "3" then
       drones["swarm_objective"] = MAXIMIZE_WEAPONS_TECHNOLOGY
+      prep_menu_sound3:play()
     elseif key == "4" then
       drones["swarm_objective"] = MAXIMIZE_SHIP_EFFICACY
+      prep_menu_sound3:play()
     elseif key == "7" then
       drones["swarm_strategy"] = RANDOM_STRATEGY
+      prep_menu_sound3:play()
     elseif key == "8" then
       drones["swarm_strategy"] = GREEDY_STRATEGY
+      prep_menu_sound3:play()
     elseif key == "9" then
       drones["swarm_strategy"] = CONSERVATIVE_STRATEGY
+      prep_menu_sound3:play()
     elseif key == "0" then
       drones["swarm_strategy"] = TIT_FOR_TAT_STRATEGY
+      prep_menu_sound3:play()
+    end
+  else
+    if key == "o" then
+      menu_state = COMMAND_STATE
+      prep_menu_sound2:play()
+    elseif key == "n" then
+      menu_state = NULL_STATE
+      prep_menu_sound2:play()
     end
   end
 end

@@ -144,11 +144,13 @@ function weapons.keypressed(key)
   	weapons.reflector.deployed = true
   end
 
-  if key == "b" and weapons.stasis.can_deploy then
+  if key == "b" and weapons.stasis.can_deploy and not weapons.stasis.deployed then
     xpos, ypos = ship.get_origin()
 
     weapons.stasis.current_time_alive = 0
     weapons.stasis.current_cooldown = 0
+
+    weapons.stasis.current_bullets = 0
 
     weapons.stasis.xposition = xpos + math.cos(ship.get_rotation()) * 60
     weapons.stasis.yposition = ypos + math.sin(ship.get_rotation()) * 60
@@ -164,7 +166,11 @@ function weapons.keypressed(key)
 
     weapons.stasis.can_deploy = false
     weapons.stasis.deployed = true
+
+  elseif key == "b" and weapons.stasis.deployed then
+  	weapons.stasis.release()
   end
+
 end
 
 function weapons.draw()
@@ -244,15 +250,18 @@ function weapons.stasis.get_hit_box()
   return leftx, rightx, topy, bottomy
 end
 
-function weapons.stasis.got_hit()
-  if weapons.statis.current_bullets < weapons.stasis.max_bullets then
+function weapons.stasis.got_hit(projtype)
+  if weapons.stasis.current_bullets < weapons.stasis.max_bullets then
   	weapons.stasis.current_bullets = weapons.stasis.current_bullets + 1
   end
 end
 
 function weapons.stasis.release()
+  weapons.stasis.deployed = false
+
   for i = 1, weapons.stasis.current_bullets do
-    
+  	local rads = math.random(1, 360) * (math.pi/180)
+    projectiles.projectile_init(weapons.stasis.xposition, weapons.stasis.yposition, rads, 1)
   end
 end
 

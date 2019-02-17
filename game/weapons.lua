@@ -26,7 +26,7 @@ local weapons = {
 
 function weapons.load()
 
-  reflector_sprite = love.graphics.newImage("media/img/reflector.png")
+  reflector_sprite = love.graphics.newImage("media/img/reflectorfat.png")
   weapons.reflector.width = reflector_sprite:getWidth()
   weapons.reflector.height = reflector_sprite:getHeight()
   
@@ -71,10 +71,49 @@ function weapons.draw()
     love.graphics.draw(reflector_sprite, weapons.reflector.xposition,
     	               weapons.reflector.yposition, weapons.reflector.rotation, 1, 1,
     	               weapons.reflector.width/2, weapons.reflector.height/2)
+
+    z1,z2,z3,z4,c1,c2,c3,c4 = weapons.reflector.get_hit_box()
+
+    love.graphics.setColor(1,1,1,.7)
+    love.graphics.rectangle("fill", z1, z3, math.abs(z1-z2), math.abs(z3-z4))
+    love.graphics.setColor(1,.2,.2,.7)
+    love.graphics.rectangle("fill", c1, c3, math.abs(c1-c2), math.abs(c3-c4))
   end
 end
 
-function weapons.draw_reflector()
+function weapons.reflector.get_hit_box()
+  rot = weapons.reflector.rotation
+  hyp = weapons.reflector.height/2
+
+  local lowr = rot - math.floor(rot/(math.pi*2)) * (math.pi*2)
+
+  if lowr > math.pi then
+  	lowr = lowr - math.pi
+  end
+
+  if lowr < math.pi/2 then
+    leftx1 = weapons.reflector.xposition - math.abs(hyp * math.sin(rot))
+    rightx1 = weapons.reflector.xposition
+    leftx2 = weapons.reflector.xposition
+    rightx2 = weapons.reflector.xposition + math.abs(hyp * math.sin(rot))
+
+    topy1 = weapons.reflector.yposition
+    bottomy1 = weapons.reflector.yposition + math.abs(hyp * math.cos(rot))
+    topy2 = weapons.reflector.yposition - math.abs(hyp * math.cos(rot))
+    bottomy2 = weapons.reflector.yposition
+  elseif lowr > math.pi/2 then
+    leftx1 = weapons.reflector.xposition - math.abs(hyp * math.sin(-rot))
+    rightx1 = weapons.reflector.xposition
+    leftx2 = weapons.reflector.xposition
+    rightx2 = weapons.reflector.xposition + math.abs(hyp * math.sin(-rot))
+
+    bottomy1 = weapons.reflector.yposition
+    topy1 = weapons.reflector.yposition - math.abs(hyp * math.cos(-rot))
+    bottomy2 = weapons.reflector.yposition + math.abs(hyp * math.cos(-rot))
+    topy2 = weapons.reflector.yposition
+  end
+
+  return leftx1, rightx1, topy1, bottomy1, leftx2, rightx2, topy2, bottomy2
 end
 
 -- Returns true if can use reflector, false otherwise

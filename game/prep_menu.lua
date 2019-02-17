@@ -12,8 +12,11 @@ local CONNECT_STATE = "connect"
 -- Useful module-level variables
 local menu_state = NULL_STATE
 local timer = 0
-local propane_mike_time = 1
-local propane_mike_msg = lume.once(drones.push_backlog_message, PROPANE_MIKE .. ": hi")
+local propane_mike_time = 6.9
+local propane_mike_msg = lume.once(
+  drones.push_backlog_message,
+  PROPANE_MIKE .. ": MAGE, call me :)"
+)
 
 
 -- Clean up this state and move to the next

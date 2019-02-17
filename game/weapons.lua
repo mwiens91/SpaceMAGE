@@ -40,7 +40,7 @@ local weapons = {
     rotation = 0,
 
     current_bullets = 0,
-    max_bullets = 10,
+    max_bullets = 20,
 
     cooldown = 1,
     current_cooldown = 1,
@@ -109,6 +109,9 @@ function weapons.stasis.update(dt)
   if weapons.stasis.current_time_alive < weapons.stasis.max_time_alive then
   	weapons.stasis.current_time_alive = weapons.stasis.current_time_alive + dt
   else
+  	if weapons.stasis.deployed then
+  	  weapons.stasis.release()
+  	end
     weapons.stasis.deployed = false
   end
   if weapons.stasis.deployed then

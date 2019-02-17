@@ -71,6 +71,10 @@ function weapons.update(dt)
 end
 
 function weapons.reflector.update(dt)
+  if weapons.reflector.deployed then
+    weapons.reflector.update_position(dt)
+  end
+
   if weapons.reflector.hit_recover then
     if weapons.reflector.recover_remaining <= 0 then
       weapons.reflector.hit_recover = false
@@ -100,6 +104,10 @@ function weapons.reflector.update(dt)
 end
 
 function weapons.stasis.update(dt)
+  if weapons.stasis.deployed then
+    weapons.stasis.update_position(dt)
+  end
+
   if weapons.stasis.current_cooldown < weapons.stasis.cooldown then
     weapons.stasis.current_cooldown = weapons.stasis.current_cooldown + dt
   else
@@ -116,6 +124,22 @@ function weapons.stasis.update(dt)
   end
   if weapons.stasis.deployed then
     weapons.stasis.rotation = weapons.stasis.rotation + 0.05
+  end
+end
+
+function weapons.reflector.update_position(dt)
+  if weapons.reflector.xposition - SCROLLING_SPEED < 0 then
+    weapons.reflector.deployed = false
+  else
+  	weapons.reflector.xposition = weapons.reflector.xposition - SCROLLING_SPEED
+  end
+end
+
+function weapons.stasis.update_position(dt)
+  if weapons.stasis.xposition - SCROLLING_SPEED < 0 then
+    weapons.stasis.deployed = false
+  else
+  	weapons.stasis.xposition = weapons.stasis.xposition - SCROLLING_SPEED
   end
 end
 

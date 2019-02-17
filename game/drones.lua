@@ -35,12 +35,14 @@ local drones = {
   -- Remember the last N drone counts drone counts
   drone_count_queue = {},
 
-  -- Drone objective and strategy
+  -- Swarm objective and strategy
   swarm_objective = MAXIMIZE_NULL,
   swarm_strategy = TIT_FOR_TAT_STRATEGY,
 
-  -- Drone morale
+  -- Swarm morale
   swarm_morale = 69,
+
+  -- Swarm
 }
 
 
@@ -293,6 +295,32 @@ function drones.regular_variance()
   )
 
   drones["drone_counts"]["drones_mining"] = mining_nums + mining_fluctuation
+end
+
+
+-- Regular morale decay
+function drones.regular_morale_decay()
+  local decay_factor = 0
+
+  if drones["swarm_objective"] == MAXIMIZE_NULL then
+    decay_factor = 0.1
+  elseif drones["swarm_strategy"] == RANDOM_STRATEGY then
+    decay_factor = 1.2
+  elseif drones["swarm_strategy"] == GREEDY_STRATEGY then
+    decay_factor = 0.9
+  elseif drones["swarm_strategy"] == CONSERVATIVE_STRATEGY then
+    decay_factor = 0.4
+  else
+    decay_factor = 0.7
+  end
+
+  local new_morale = drones["swarm_morale"] - decay_factor
+
+  if new_morale < 0 then
+    drones["swarm_morale"] = 0
+  else
+    drones["swarm_morale"] = new_morale
+  end
 end
 
 

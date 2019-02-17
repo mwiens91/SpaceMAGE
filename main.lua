@@ -79,6 +79,10 @@ function love.load()
   msg_timer = 0
   msg_cycle = 0.069
 
+  -- Timer for morale decay
+  morale_timer = 0
+  morale_cycle = 1
+
   -- Seed drone counts queue and clusters
   drones.seed_drone_count_queue()
   drones.seed_drone_clusters()
@@ -114,9 +118,20 @@ function love.update(dt)
     end
   end
 
-  -- Load the update function for the state we're in
-  if states[current_state] ~= nil then
-    states[current_state]:update(dt)
+  -- Static morale decay
+  if current_state ~= "title_menu" then
+    morale_timer = morale_timer + dt
+
+    if morale_timer > morale_cycle then
+      drones.regular_morale_decay()
+
+      morale_timer = morale_timer - morale_cycle
+    end
+
+    -- Load the update function for the state we're in
+    if states[current_state] ~= nil then
+      states[current_state]:update(dt)
+    end
   end
 end
 
@@ -140,7 +155,7 @@ function love.draw()
 
     -- Show drone stats
     love.graphics.printf(
-      "SWARM_MORALE    " .. drones["swarm_morale"],
+      "SWARM_MORALE    " .. lume.round(drones["swarm_morale"]),
       10,
       55,
       GAME_WIDTH,

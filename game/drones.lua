@@ -1,9 +1,16 @@
 local drones = {
-  -- Starting drone counts
+  -- Drone counts
   drone_counts = {
     drones_attack = STARTING_ATTACK_DRONES,
     drones_exploration = STARTING_EXPLORATION_DRONES,
     drones_mining = STARTING_MINING_DRONES,
+  },
+
+  -- Drone cluster names
+  drone_clusters = {
+    clusters_attack = {},
+    clusters_exploration = {},
+    clusters_mining = {},
   },
 
   -- Drone message log
@@ -58,6 +65,39 @@ function drones.get_total_drone_percentage_change()
   local percent_change = (new_count - old_count) / old_count * 100
 
   return percent_change
+end
+
+
+-- Seed drone clusters
+function drones.seed_drone_clusters()
+  local num_attack_drones = drones["drone_counts"]["drones_attack"]
+  local num_exploration_drones = drones["drone_counts"]["drones_exploration"]
+  local num_mining_drones = drones["drone_counts"]["drones_mining"]
+
+  local num_attack_clusters = math.floor(num_attack_drones / DRONE_CLUSTER_SIZE)
+  local num_exploration_clusters = math.floor(num_exploration_drones / DRONE_CLUSTER_SIZE)
+  local num_mining_clusters = math.floor(num_mining_drones / DRONE_CLUSTER_SIZE)
+
+  for i=1,num_attack_clusters do
+    lume.push(
+      drones["drone_clusters"]["clusters_attack"],
+      name_generation.generate_cluster_name(ATTACK_TYPE)
+    )
+  end
+
+  for i=1,num_exploration_clusters do
+    lume.push(
+      drones["drone_clusters"]["clusters_exploration"],
+      name_generation.generate_cluster_name(EXPLORE_TYPE)
+    )
+  end
+
+  for i=1,num_mining_clusters do
+    lume.push(
+      drones["drone_clusters"]["clusters_mining"],
+      name_generation.generate_cluster_name(MINE_TYPE)
+    )
+  end
 end
 
 

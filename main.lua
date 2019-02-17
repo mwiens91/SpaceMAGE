@@ -10,6 +10,7 @@ require "globals"
 collision = require "game.collision"
 drones = require "game.drones"
 enemies = require "game.enemies"
+name_generation = require "game.name_generation"
 planets = require "game.planets"
 prep_menu = require "game.prep_menu"
 projectiles = require "game.projectiles"
@@ -70,8 +71,9 @@ function love.load()
   drone_timer = 0
   drone_cycle = 0.03
 
-  -- Seed drone counts queue
+  -- Seed drone counts queue and clusters
   drones.seed_drone_count_queue()
+  drones.seed_drone_clusters()
 end
 
 function love.update(dt)

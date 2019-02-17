@@ -25,6 +25,7 @@ weapons = require "game.weapons"
 function love.load()
   -- Setup screen resolution and upscaling with push
   local window_width, window_height = love.window.getDesktopDimensions()
+	math.randomseed(os.time())
 
   push:setupScreen(
     GAME_WIDTH,

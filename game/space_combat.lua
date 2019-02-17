@@ -1,5 +1,8 @@
 local space_combat = {
   music_playing = false,
+  num_laser_ships = 3,
+  num_missile_launchers = 3,
+  num_snipers = 1,
 }
 
 -- Space combat state
@@ -20,7 +23,7 @@ function space_combat:update(dt)
   	ship.load()
   end
   if (not enemies.is_loaded) then
-    enemies.load()
+    enemies.load('space_combat')
   end
   if (not projectiles.is_loaded) then
     projectiles.load()

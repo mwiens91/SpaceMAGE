@@ -5,19 +5,53 @@ local enemies = {
   is_loaded = false,
   shot_error = 0.4,
   images = {"media/img/enemy1.png", "media/img/enemy2.png"},
-  shot_delay = {1, 10,},
+  shot_delay = {1, 5,},
   speed = {1, 1,},
   max_health = {50, 50,},
 
 }
 
-function enemies.load()
+function enemies.load(stage)
   enemies.init()
-  enemies.enemy_init(700,200,1)
-  enemies.enemy_init(600,400,2)
-  --enemies.enemy_init(500,500)
-  --enemies.enemy_init(300,100)
+  local planet_leftx = planet.x - planet.width
+  if stage == 'space_combat' then
+    for i = 1, space_combat.num_laser_ships do
+      rand_x = planet_leftx - math.random()*planet_leftx/2
+      rand_y = math.random() * GAME_HEIGHT
+      for i, enemy in ipairs(enemy_ships) do
+        while enemies.are_close(rand_x, rand_y, enemy.x, enemy.y) do
+          rand_x = planet_leftx - math.random()*planet_leftx/2
+          rand_y = math.random() * GAME_HEIGHT
+        end
+      end
+      enemies.enemy_init(rand_x, rand_y, 1)
+    end
+
+    for i = 1, space_combat.num_missile_launchers do
+      rand_x = planet_leftx - math.random()*planet_leftx/2
+      rand_y = math.random() * GAME_HEIGHT
+      for i, enemy in ipairs(enemy_ships) do
+        while enemies.are_close(rand_x, rand_y, enemy.x, enemy.y) do
+          rand_x = planet_leftx - math.random()*planet_leftx/2
+          rand_y = math.random() * GAME_HEIGHT
+        end
+      end
+      enemies.enemy_init(rand_x, rand_y, 2)
+    end
+    --enemies.enemy_init(700,200,1)
+    --enemies.enemy_init(600,400,2)
+    --enemies.enemy_init(500,500)
+    --enemies.enemy_init(300,100)
+  end
   enemies.is_loaded = true
+end
+
+function enemies.are_close(x1, y1, x2, y2)
+  if(math.abs(x1-x2) < 150 and math.abs(y1-y2) < 150) then
+    return true
+  else
+    return false
+  end
 end
 
 function enemies.init()
@@ -103,10 +137,12 @@ function enemies.draw()
     local top_bar = enemy.y + enemy.height/2 + enemies.space_between_bar
     local length_filled = enemies.health_bar_width*(enemy.current_health/enemy.max_health)
     local length_not_filled = enemies.health_bar_width-length_filled
+    r, g, b, a = love.graphics.getColor()
     love.graphics.setColor(0.0, 1.0, 0.0, 1.0)
     love.graphics.rectangle("fill", left_bar, top_bar, length_filled, enemies.health_bar_height)
     love.graphics.setColor(1.0, 0.0, 0.0, 1.0)
     love.graphics.rectangle("fill", left_bar+length_filled, top_bar, length_not_filled, enemies.health_bar_height)
+    love.graphics.setColor(r, g, b, a)
 
   end
 end

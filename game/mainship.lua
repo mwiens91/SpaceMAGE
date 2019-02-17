@@ -24,7 +24,7 @@ function ship.get_origin()
 end
 
 function ship.load()
-  ship_sprite = love.graphics.newImage("media/img/shiptest.png")
+  ship_sprite = love.graphics.newImage("media/img/ship.png")
   ship.width = ship_sprite:getWidth()
   ship.height = ship_sprite:getHeight()
   

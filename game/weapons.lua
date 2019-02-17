@@ -222,6 +222,18 @@ function weapons.stasis.get_hit_box()
   return leftx, rightx, topy, bottomy
 end
 
+function weapons.stasis.got_hit()
+  if weapons.statis.current_bullets < weapons.stasis.max_bullets then
+  	weapons.stasis.current_bullets = weapons.stasis.current_bullets + 1
+  end
+end
+
+function weapons.stasis.release()
+  for i = 1, weapons.stasis.current_bullets do
+    
+  end
+end
+
 -- Returns true if can use reflector, false otherwise
 function weapons.has_reflector()
  return weapons.reflector

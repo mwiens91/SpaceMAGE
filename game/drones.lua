@@ -7,20 +7,21 @@ local drones = {
   },
 
   -- Drone message log
-  drone_log = {
-    "propanemike01: GIMME MY GAT BACK",
-    "propanemike01: BEFORE I GIVE YOU A HEART ATTACK",
-    "propanemike01: THESE BITCHES BE WACK",
-    "slowfox9: any questions ... ?",
-    "booga: trash",
-    "slowfox9: guys?",
-    "slowfox9: in the back?",
-    "booga: i show you",
-  },
+  drone_log = {},
 
   -- Remember the last N drone counts drone counts
   drone_count_queue = {}
 }
+
+
+-- Push a message to the drone log
+function drones.push_message(msg)
+  lume.push(drones["drone_log"], msg)
+
+  if #drones["drone_log"] > MAX_DRONE_MESSAGES then
+    table.remove(drones["drone_log"], 1)
+  end
+end
 
 
 -- Seed drone_count_queue
@@ -32,11 +33,13 @@ function drones.seed_drone_count_queue()
   end
 end
 
+
 -- Update drone_count_queue
 function drones.update_drone_count_queue()
   table.remove(drones["drone_count_queue"])
   table.insert(drones["drone_count_queue"], 1, drones.get_total_drones())
 end
+
 
 -- Get total drones
 function drones.get_total_drones()
@@ -47,6 +50,7 @@ function drones.get_total_drones()
   )
 end
 
+
 -- Get percentage change of drones.
 function drones.get_total_drone_percentage_change()
   local new_count = drones["drone_count_queue"][1]
@@ -55,6 +59,7 @@ function drones.get_total_drone_percentage_change()
 
   return percent_change
 end
+
 
 -- Regular variance in drone numbers (independent of any game events).
 function drones.regular_variance()

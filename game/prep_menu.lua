@@ -52,6 +52,7 @@ function prep_menu:draw()
   love.graphics.setFont(font_default)
 end
 
+
 function prep_menu:keypressed(key)
   if key == "m" then
     sfx["menu_long_01"]:play()

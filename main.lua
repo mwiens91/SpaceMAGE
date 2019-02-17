@@ -155,10 +155,6 @@ function love.draw()
         GAME_WIDTH,
         "left"
       )
-
-      if idx == 7 then
-        break
-      end
     end
 
     -- Show shields

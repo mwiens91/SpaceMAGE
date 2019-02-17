@@ -25,29 +25,35 @@ end
 
 function prep_menu:draw()
   -- Draw the title screen menu
-  love.graphics.setFont(font_title)
+  love.graphics.setFont(font_menu)
 
   love.graphics.printf(
-    "space_MAGE_",
+    "command [o]",
     0,
-    300,
-    1280,
-    "center"
+    GAME_HEIGHT - 100,
+    GAME_WIDTH - 20,
+    "right"
   )
   love.graphics.printf(
-    "IMA MENU",
+    "connect [n]",
     0,
-    450,
-    1280,
-    "center"
+    GAME_HEIGHT - 70,
+    GAME_WIDTH - 20,
+    "right"
+  )
+  love.graphics.printf(
+    "commence [m]",
+    0,
+    GAME_HEIGHT - 40,
+    GAME_WIDTH - 20,
+    "right"
   )
 
   love.graphics.setFont(font_default)
 end
 
 function prep_menu:keypressed(key)
-  if key == "return" then
-    -- Play a menu sound
+  if key == "m" then
     sfx["menu_long_01"]:play()
 
     exit_state()

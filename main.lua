@@ -55,6 +55,7 @@ function love.load()
   -- Load the main font
   font_default = love.graphics.newFont(FONT_PATH, DEFAULT_FONT_SIZE)
   font_log = love.graphics.newFont(FONT_PATH, LOG_FONT_SIZE)
+  font_menu = love.graphics.newFont(FONT_PATH, MENU_FONT_SIZE)
   font_quote = love.graphics.newFont(FONT_PATH, QUOTE_FONT_SIZE)
   font_shields = love.graphics.newFont(FONT_PATH, SHIELDS_FONT_SIZE)
   font_title = love.graphics.newFont(FONT_PATH, TITLE_FONT_SIZE)

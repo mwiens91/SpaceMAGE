@@ -63,6 +63,7 @@ function projectiles.update(dt)
       proj.x = proj.x + math.cos(proj.rotation)*proj.speed
       proj.y = proj.y + math.sin(proj.rotation)*proj.speed
     end
+    proj.x = proj.x - SCROLLING_SPEED
     if (not general.valid_position(proj.x, proj.y)) then
       table.remove(projectiles, i)
     end

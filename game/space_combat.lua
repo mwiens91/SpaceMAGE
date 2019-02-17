@@ -28,6 +28,9 @@ function space_combat:update(dt)
   if (not weapons.is_loaded) then
     weapons.load()
   end
+  if (not space_background.is_loaded) then
+    space_background.load()
+  end
 
   planets.update(dt)
   ship.update(dt)
@@ -35,9 +38,11 @@ function space_combat:update(dt)
   projectiles.update(dt)
   weapons.update(dt)
   collision.collision_detection()
+  space_background.update(dt)
 end
 
 function space_combat:draw()
+  space_background.draw()
   planets.draw()
   ship.draw()
   enemies.draw()

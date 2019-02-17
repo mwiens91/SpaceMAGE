@@ -6,6 +6,9 @@ local weapons = {
   emp = false,
 
   reflector = {
+    hit_recover = false,
+    recover_time = 0.12,
+    recover_remaining = 0,
     can_deploy = true,
     deployed = false,
     width = 0,
@@ -51,7 +54,7 @@ function weapons.load()
   weapons.reflector.width = reflector_sprite:getWidth()
   weapons.reflector.height = reflector_sprite:getHeight()
 
-  stasis_sprite = love.graphics.newImage("media/img/stasisbig.png")
+  stasis_sprite = love.graphics.newImage("media/img/stasis.png")
   weapons.stasis.width = stasis_sprite:getWidth()
   weapons.stasis.height = stasis_sprite:getHeight()
   
@@ -64,6 +67,14 @@ function weapons.update(dt)
 end
 
 function weapons.reflector.update(dt)
+  if weapons.reflector.hit_recover then
+    if weapons.reflector.recover_remaining <= 0 then
+      weapons.reflector.hit_recover = false
+      weapons.reflector.recover_remaining = 0
+    else
+      weapons.reflector.recover_remaining = weapons.reflector.recover_remaining-dt
+    end
+  end
   -- if the reflector's cooldown is done, can deploy can
   if weapons.reflector.current_cooldown < weapons.reflector.cooldown then
     weapons.reflector.current_cooldown = weapons.reflector.current_cooldown + dt
@@ -195,7 +206,11 @@ function weapons.reflector.get_hit_box()
 end
 
 function weapons.reflector.got_hit(damage)
-  weapons.reflector.current_health = weapons.reflector.current_health - damage
+  if not weapons.reflector.hit_recover then
+    weapons.reflector.current_health = weapons.reflector.current_health-damage
+    weapons.reflector.hit_recover = true
+    weapons.reflector.recover_remaining = weapons.reflector.recover_time
+  end
   print(string.format("Shield Remaining = %d", weapons.reflector.current_health))
 end
 

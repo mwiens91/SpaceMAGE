@@ -90,6 +90,8 @@ function ship.update(dt)
   	ship.moving = false
   	if ship.cur_speed > 0 then
   	  ship.cur_speed = ship.cur_speed - 0.05
+  	else
+  	  ship.cur_speed = 0
   	end
     
     newx = ship.xposition + (math.cos(ship.rotation) * ship.cur_speed)

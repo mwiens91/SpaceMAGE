@@ -52,7 +52,8 @@ end
 
 -- Updates the ships movement based on key pressed
 function ship.update(dt)
-  --print(ship.get_origin())
+  -- Scrolling
+  ship.update_position()
 
   -- Regnerate health per second
   ship.health_timer = ship.health_timer + dt
@@ -109,6 +110,14 @@ function ship.update(dt)
   end
   if love.keyboard.isDown("right") or love.keyboard.isDown("d") then
     ship.rotation = ship.rotation + 0.01 * ship.rot_speed_scale
+  end
+end
+
+function ship.update_position(dt)
+  if ship.xposition - SCROLLING_SPEED < 0 then
+  	ship.xposition = 0
+  else
+  	ship.xposition = ship.xposition - SCROLLING_SPEED
   end
 end
 

@@ -62,14 +62,14 @@ function title_menu:draw()
       "“If one company or small group of people manages to develop god-like superintelligence, they could take over the world”",
       0,
       300,
-      1280,
+      GAME_WIDTH,
       "center"
     )
     love.graphics.printf(
       "— Elon Musk, 2018",
       0,
       400,
-      1280,
+      GAME_WIDTH,
       "center"
     )
 
@@ -83,7 +83,7 @@ function title_menu:draw()
       "space_MAGE_",
       0,
       300,
-      1280,
+      GAME_WIDTH,
       "center"
     )
 
@@ -95,7 +95,7 @@ function title_menu:draw()
         "ゲームを始める ENTER",
         0,
         550,
-        1280,
+        GAME_WIDTH,
         "center"
       )
     end

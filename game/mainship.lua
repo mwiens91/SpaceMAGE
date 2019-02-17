@@ -93,7 +93,7 @@ end
 -- Ship took damage from something
 function ship.got_hit(damage)
   ship.current_health = ship.current_health - damage
-  print(string.format("Health Remaining = %d", ship.current_health))
+  --print(string.format("Health Remaining = %d", ship.current_health))
 end
 
 function ship.get_current_health()

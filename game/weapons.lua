@@ -17,11 +17,11 @@ local weapons = {
 
     current_health = 30,
     max_health = 30,
-    cooldown = 3, -- seconds till can use again after use
-    current_cooldown = 3,
+    cooldown = 1, -- seconds till can use again after use
+    current_cooldown = 1,
 
-    max_time_alive = 2,
-    current_time_alive = 2,
+    max_time_alive = 5,
+    current_time_alive = 5,
   },
 }
 
@@ -35,15 +35,22 @@ function weapons.load()
 end
 
 function weapons.update(dt)
+  -- if the reflector's cooldown is done, can deploy can
   if weapons.reflector.current_cooldown < weapons.reflector.cooldown then
     weapons.reflector.current_cooldown = weapons.reflector.current_cooldown + dt
   else
   	weapons.reflector.can_deploy = true
   end
 
+  -- if reflectors time on screen in up, remove reflector
   if weapons.reflector.current_time_alive < weapons.reflector.max_time_alive then
     weapons.reflector.current_time_alive = weapons.reflector.current_time_alive + dt
   else
+  	weapons.reflector.deployed = false
+  end
+
+  -- if reflectors hp reachs 0, remove
+  if weapons.reflector.current_health <= 0 then
   	weapons.reflector.deployed = false
   end
 
@@ -58,9 +65,10 @@ function weapons.keypressed(key)
     weapons.reflector.current_cooldown = 0
 
     weapons.reflector.rotation = ship.get_rotation()
-    weapons.reflector.xposition = xpos + math.cos(weapons.reflector.rotation) * 30
-    weapons.reflector.yposition = ypos + math.sin(weapons.reflector.rotation) * 30
+    weapons.reflector.xposition = xpos + math.cos(weapons.reflector.rotation) * 40
+    weapons.reflector.yposition = ypos + math.sin(weapons.reflector.rotation) * 40
     
+    weapons.reflector.current_health = weapons.reflector.max_health
 
   	weapons.reflector.can_deploy = false
   	weapons.reflector.deployed = true

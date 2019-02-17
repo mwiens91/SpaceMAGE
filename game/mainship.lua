@@ -19,6 +19,12 @@ local ship = {
 
   health_timer = 0,
   health_regen = 1, -- health regenerated / second
+
+  current_heat = 0,
+  max_heat = 100,
+
+  heat_timer = 0,
+  heat_cycle = 1,
 }
 
 function ship.get_origin()
@@ -54,6 +60,18 @@ function ship.update(dt)
       ship.current_health = (ship.current_health + ship.health_regen)
     else
       ship.current_health = ship.max_health
+    end
+  end
+
+  -- Cooldown your ship
+  ship.heat_timer = ship.heat_timer + dt
+  if ship.heat_timer > ship.heat_cycle then
+  	ship.heat_timer = 0
+  	local heat_drop = ship.max_heat / 10
+  	if ship.current_heat - heat_drop < 0 then
+  	  ship.current_heat = 0
+  	else
+      ship.current_heat = ship.current_heat - heat_drop
     end
   end
 
@@ -129,6 +147,14 @@ function ship.get_health_regen()
   return ship.health_regen
 end
 
+function ship.get_current_heat()
+  return ship.current_heat
+end
+
+function ship.get_max_heat()
+  return ship.max_heat
+end
+
 function ship.set_current_health(value)
   ship.current_health = value
 end
@@ -147,6 +173,14 @@ end
 
 function ship.set_health_regen(value)
   ship.health_regen = value
+end
+
+function ship.set_current_heat(value)
+  ship.current_heat = value
+end
+
+function ship.set_max_heat(value)
+  ship.max_heat = value
 end
 
 return ship

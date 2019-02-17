@@ -8,7 +8,7 @@ function planets.load(planet_index)
   planet = {}
   if(planet_index) == 1 then
     planet.index = 1
-    planet.x = GAME_WIDTH
+    planet.x = SCROLL_WIDTH
     planet.y = GAME_HEIGHT/2
     local img_file = planets.images[planet.index]
     planet.sprite = love.graphics.newImage(img_file)
@@ -28,7 +28,10 @@ end
 
 
 function planets.update(dt)
-  --if planet ever needs updating (e.g. exploding...)
+  planet.x = planet.x - SCROLLING_SPEED
+  if planet_x <= GAME_WIDTH then
+    planet_x = GAME_WIDTH
+  end
 end
 
 return planets

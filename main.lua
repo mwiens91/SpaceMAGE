@@ -86,9 +86,8 @@ function love.update(dt)
   drone_timer = drone_timer + dt
 
   if drone_timer > drone_cycle then
-    drones.regular_variance()
-
-    drones.update_drone_count_queue()
+    -- Call a function that calls a bunch more specific functions
+    drones.update_drones()
 
     drone_timer = drone_timer - drone_cycle
   end

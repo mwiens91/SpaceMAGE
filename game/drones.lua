@@ -6,6 +6,19 @@ local drones = {
     drones_mining = STARTING_MINING_DRONES,
   },
 
+  -- Count the number of drone births and deaths we have so we know when
+  -- to create and destroy clusters
+  drone_birth_counts = {
+    drones_attack = STARTING_ATTACK_DRONES % DRONE_CLUSTER_SIZE,
+    drones_exploration = STARTING_EXPLORATION_DRONES % DRONE_CLUSTER_SIZE,
+    drones_mining = STARTING_MINING_DRONES % DRONE_CLUSTER_SIZE,
+  },
+  drone_death_counts = {
+    drones_attack = 0,
+    drones_exploration = 0,
+    drones_mining = 0
+  },
+
   -- Drone cluster names
   drone_clusters = {
     clusters_attack = {},
@@ -54,6 +67,66 @@ end
 function drones.update_drone_count_queue()
   table.remove(drones["drone_count_queue"])
   table.insert(drones["drone_count_queue"], 1, drones.get_total_drones())
+end
+
+
+-- Update drone birth and death counts
+function drones.update_drone_birth_and_death_counts(old_counts)
+  -- TODO make this function not disgusting
+
+  -- Find the differences (deltas)
+  local delta_attack = drones["drone_counts"]["drones_attack"] - old_counts["drones_attack"]
+  local delta_exploration = drones["drone_counts"]["drones_exploration"] - old_counts["drones_exploration"]
+  local delta_mining = drones["drone_counts"]["drones_mining"] - old_counts["drones_mining"]
+
+  -- Add the numbers to the birth and death counts
+  if delta_attack >= 0 then
+    drones["drone_birth_counts"]["drones_attack"] = drones["drone_birth_counts"]["drones_attack"] + delta_attack
+
+    if drones["drone_birth_counts"]["drones_attack"] >= DRONE_CLUSTER_SIZE then
+      drones["drone_birth_counts"]["drones_attack"] = drones["drone_birth_counts"]["drones_attack"] - DRONE_CLUSTER_SIZE
+      drones.create_drone_cluster(ATTACK_TYPE)
+    end
+  else
+    drones["drone_death_counts"]["drones_attack"] = drones["drone_death_counts"]["drones_attack"] - delta_attack
+
+    if drones["drone_death_counts"]["drones_attack"] >= DRONE_CLUSTER_SIZE and #drones["drone_clusters"]["clusters_attack"] ~= 0 then
+      drones["drone_death_counts"]["drones_attack"] = drones["drone_death_counts"]["drones_attack"] - DRONE_CLUSTER_SIZE
+      drones.destroy_drone_cluster(ATTACK_TYPE)
+    end
+  end
+
+  if delta_exploration >= 0 then
+    drones["drone_birth_counts"]["drones_exploration"] = drones["drone_birth_counts"]["drones_exploration"] + delta_exploration
+
+    if drones["drone_birth_counts"]["drones_exploration"] >= DRONE_CLUSTER_SIZE then
+      drones["drone_birth_counts"]["drones_exploration"] = drones["drone_birth_counts"]["drones_exploration"] - DRONE_CLUSTER_SIZE
+      drones.create_drone_cluster(EXPLORE_TYPE)
+    end
+  else
+    drones["drone_death_counts"]["drones_exploration"] = drones["drone_death_counts"]["drones_exploration"] - delta_exploration
+
+    if drones["drone_death_counts"]["drones_exploration"] >= DRONE_CLUSTER_SIZE and #drones["drone_clusters"]["clusters_exploration"] ~= 0 then
+      drones["drone_death_counts"]["drones_exploration"] = drones["drone_death_counts"]["drones_exploration"] - DRONE_CLUSTER_SIZE
+      drones.destroy_drone_cluster(EXPLORE_TYPE)
+    end
+  end
+
+  if delta_mining >= 0 then
+    drones["drone_birth_counts"]["drones_mining"] = drones["drone_birth_counts"]["drones_mining"] + delta_mining
+
+    if drones["drone_birth_counts"]["drones_mining"] >= DRONE_CLUSTER_SIZE then
+      drones["drone_birth_counts"]["drones_mining"] = drones["drone_birth_counts"]["drones_mining"] - DRONE_CLUSTER_SIZE
+      drones.create_drone_cluster(MINE_TYPE)
+    end
+  else
+    drones["drone_death_counts"]["drones_mining"] = drones["drone_death_counts"]["drones_mining"] - delta_mining
+
+    if drones["drone_death_counts"]["drones_mining"] >= DRONE_CLUSTER_SIZE and #drones["drone_clusters"]["clusters_mining"] ~= 0 then
+      drones["drone_death_counts"]["drones_mining"] = drones["drone_death_counts"]["drones_mining"] - DRONE_CLUSTER_SIZE
+      drones.destroy_drone_cluster(MINE_TYPE)
+    end
+  end
 end
 
 
@@ -126,6 +199,62 @@ function drones.seed_drone_clusters()
 end
 
 
+-- Create a drone cluster
+function drones.create_drone_cluster(drone_type)
+  local cluster_name = ""
+
+  if drone_type == ATTACK_TYPE then
+    cluster_name = name_generation.generate_cluster_name(ATTACK_TYPE)
+
+    lume.push(
+      drones["drone_clusters"]["clusters_attack"],
+      cluster_name
+    )
+  elseif drone_type == EXPLORE_TYPE then
+    cluster_name = name_generation.generate_cluster_name(EXPLORE_TYPE)
+
+    lume.push(
+      drones["drone_clusters"]["clusters_exploration"],
+      cluster_name
+    )
+  else
+    cluster_name = name_generation.generate_cluster_name(MINE_TYPE)
+
+    lume.push(
+      drones["drone_clusters"]["clusters_mining"],
+      cluster_name
+    )
+  end
+
+  drones.push_backlog_message(dialogue_generation.fealty_announcement(cluster_name))
+end
+
+
+-- Destroy a drone cluster
+function drones.destroy_drone_cluster(drone_type)
+  local cluster_name = ""
+
+  if drone_type == ATTACK_TYPE then
+    cluster_name = table.remove(
+      drones["drone_clusters"]["clusters_attack"],
+      math.random(#drones["drone_clusters"]["clusters_attack"])
+    )
+  elseif drone_type == EXPLORE_TYPE then
+    cluster_name = table.remove(
+      drones["drone_clusters"]["clusters_exploration"],
+      math.random(#drones["drone_clusters"]["clusters_exploration"])
+    )
+  else
+    cluster_name = table.remove(
+      drones["drone_clusters"]["clusters_mining"],
+      math.random(#drones["drone_clusters"]["clusters_mining"])
+    )
+  end
+
+  drones.push_backlog_message(dialogue_generation.death_announcement(cluster_name, drone_type))
+end
+
+
 -- Regular variance in drone numbers (independent of any game events).
 function drones.regular_variance()
   -- Attack drones
@@ -157,6 +286,23 @@ function drones.regular_variance()
   )
 
   drones["drone_counts"]["drones_mining"] = mining_nums + mining_fluctuation
+end
+
+
+-- Update drone numbers. This is a general function that calls a bunch
+-- of more specific functions.
+function drones.update_drones()
+  -- Capture old drone counts
+  local old_drone_counts = lume.clone(drones["drone_counts"])
+
+  -- Regular variance in drone numbers
+  drones.regular_variance()
+
+  -- Update the drone count queue
+  drones.update_drone_count_queue()
+
+  -- Update the drone birth and death counts
+  drones.update_drone_birth_and_death_counts(old_drone_counts)
 end
 
 

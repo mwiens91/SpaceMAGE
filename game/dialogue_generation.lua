@@ -4,7 +4,7 @@ local dialogue_generation = {
 
 -- Generate a fealty announcement message
 function dialogue_generation.fealty_announcement(name)
-  return name ..  " announces fealty to MAGE."
+  return name .. " announces fealty to MAGE."
 end
 
 

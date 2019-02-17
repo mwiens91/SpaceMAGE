@@ -1,8 +1,8 @@
 local projectiles = {
   is_loaded = false,
-  images = {"media/img/projectile1.png",},
-  p_damage = {10,},
-  p_speed = {10,},
+  images = {"media/img/projectile1.png", "media/img/projectile2.png",},
+  p_damage = {10, 30,},
+  p_speed = {10, 6},
 
 }
 
@@ -17,17 +17,23 @@ end
 
 function projectiles.projectile_init(x, y, rotation, p_type)
   projectile = {}
-  if(p_type) == 1 then
-    projectile.x = x
-    projectile.y = y
-    projectile.rotation = rotation
-    projectile.p_type = 1
+  projectile.x = x
+  projectile.y = y
+  projectile.rotation = rotation
+  projectile.p_type = p_type
+  local img_file = projectiles.images[projectile.p_type]
+  projectile.sprite = love.graphics.newImage(img_file)
+  projectile.width = projectile.sprite:getWidth()
+  projectile.height = projectile.sprite:getHeight()
+
+  if(p_type == 1) then
+    --laser
     projectile.speed = projectiles.p_speed[p_type]
     projectile.damage = projectiles.p_damage[p_type]
-    local img_file = projectiles.images[projectile.p_type]
-    projectile.sprite = love.graphics.newImage(img_file)
-    projectile.width = projectile.sprite:getWidth()
-    projectile.height = projectile.sprite:getHeight()
+  elseif(p_type == 2) then
+    --missile
+    projectile.speed = projectiles.p_speed[p_type]
+    projectile.damage = projectiles.p_damage[p_type]
   end
  
   table.insert(all_projectiles, projectile)

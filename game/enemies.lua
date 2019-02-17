@@ -1,6 +1,9 @@
 local enemies = {
   is_loaded = false,
-  shot_error = 0.4
+  shot_error = 0.4,
+  images = {"media/img/enemy1.png", "media/img/enemy2.png"},
+  shot_delay = {1, 5,},
+  speed = {10, 6,},
 
 }
 
@@ -8,7 +11,7 @@ ENEMY_SHIP_COLOR = {1.0, 1.0, 1.0}
 
 function enemies.load()
   enemies.init()
-  enemies.enemy_init(700,300)
+  enemies.enemy_init(700,300,1)
   --enemies.enemy_init(500,500)
   --enemies.enemy_init(300,100)
   enemies.is_loaded = true
@@ -34,7 +37,7 @@ end
 function enemies.shoot(enemy)
   local diff_x = (ship.xposition - enemy.x)
   local diff_y = (ship.yposition - enemy.y)
-  local shot_speed = projectiles.p_speed[enemy.proj_type]
+  local shot_speed = projectiles.p_speed[enemy.e_type]
   local rotation_to_ship = math.atan(diff_y/diff_x)
 
   if diff_x < 0 then
@@ -50,32 +53,41 @@ function enemies.shoot(enemy)
     new_rotation = rotation_to_ship
   end
 
-  --rotation = rotation-enemies.shot_error/2 + math.random()*enemies.shot_error
-  --projectiles.projectile_init(enemy.x, enemy.y, rotation, enemy.shot_speed)
-  --projectiles.projectile_init(enemy.x, enemy.y, last_rotation, enemy.shot_speed)
-  projectiles.projectile_init(enemy.x, enemy.y, new_rotation, enemy.proj_type)
+  projectiles.projectile_init(enemy.x, enemy.y, new_rotation, enemy.e_type)
 end
 
-function enemies.enemy_init(x, y)
+function enemies.enemy_init(x, y, e_type)
   enemy_ship = {}
   enemy_ship.x = x
   enemy_ship.y = y
   enemy_ship.rotation = math.pi
-  enemy_ship.speed = 1
-  enemy_ship.proj_type =  1
-  enemy_ship.shot_delay = 1
-  enemy_ship.last_shot = 0
+  enemy_ship.e_type = e_type
+  local img_file = enemies.images[enemy_ship.e_type]
+  enemy_ship.sprite = love.graphics.newImage(img_file)
+  enemy_ship.width = enemy_ship.sprite:getWidth()
+  enemy_ship.height = enemy_ship.sprite:getHeight()
+
+  if(e_type == 1) then
+    --regular laser ships
+    enemy_ship.speed = enemies.speed[e_type]
+    enemy_ship.shot_delay = enemies.shot_delay[e_type]
+    enemy_ship.last_shot = 0
+  elseif(e_type == 2) then
+    --missile ships
+    enemy_ship.speed = enemies.speed[e_type]
+    enemy_ship.shot_delay = enemies.shot_delay[e_type]
+    enemy_ship.last_shot = 0
+  end
+  
   table.insert(enemy_ships, enemy_ship)
+
+
 end
 
 
 function enemies.draw()
-  --love.graphics.setColor(1,1,1)
-  --love.graphics.rectangle("fill", enemy_ship.x, enemy_ship.y, 30, 30)
   for i, enemy in ipairs(enemy_ships) do
-    love.graphics.setColor(ENEMY_SHIP_COLOR[1], ENEMY_SHIP_COLOR[2], ENEMY_SHIP_COLOR[3])
-
-    love.graphics.rectangle("fill", enemy.x, enemy.y, 30, 30)
+    love.graphics.draw(enemy.sprite, enemy.x, enemy.y, enemy.rotation, 1, 1, enemy.width/2, enemy.height/2)
   end
 end
 

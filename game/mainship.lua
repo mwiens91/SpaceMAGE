@@ -9,6 +9,8 @@ local ship = {
   up_speed_scale = 4,
   rot_speed_scale = 7,
 
+  cur_speed = 0,
+
   width = 0,
   height = 0,
 
@@ -57,14 +59,27 @@ function ship.update(dt)
 
   if love.keyboard.isDown("up") or love.keyboard.isDown("w") then
     ship.moving = true
-    newx = ship.xposition + (math.cos(ship.rotation) * ship.up_speed_scale)
-    newy = ship.yposition + (math.sin(ship.rotation) * ship.up_speed_scale)
+    if ship.cur_speed < ship.up_speed_scale then
+      ship.cur_speed = ship.cur_speed + 0.1
+    end
+    newx = ship.xposition + (math.cos(ship.rotation) * ship.cur_speed)
+    newy = ship.yposition + (math.sin(ship.rotation) * ship.cur_speed)
     if (general.valid_position(newx, newy)) then
       ship.xposition = newx
       ship.yposition = newy
     end
   else
-    ship.moving = false
+  	ship.moving = false
+  	if ship.cur_speed > 0 then
+  	  ship.cur_speed = ship.cur_speed - 0.05
+  	end
+    
+    newx = ship.xposition + (math.cos(ship.rotation) * ship.cur_speed)
+    newy = ship.yposition + (math.sin(ship.rotation) * ship.cur_speed)
+    if (general.valid_position(newx, newy)) then
+      ship.xposition = newx
+      ship.yposition = newy
+    end
   end
 
   if love.keyboard.isDown("left") or love.keyboard.isDown("a") then

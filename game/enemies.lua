@@ -86,10 +86,10 @@ function enemies.shoot(enemy, rotation_to_ship)
     local shot_speed = projectiles.p_speed[enemy.e_type]
     local rotation_from_ship = (rotation_to_ship+math.pi) - ship.rotation
     local new_rotation
-    nextx = ship.xposition + (math.cos(ship.rotation) * ship.up_speed_scale)
-    nexty = ship.yposition + (math.sin(ship.rotation) * ship.up_speed_scale)
+    nextx = ship.xposition + (math.cos(ship.rotation) * ship.cur_speed)
+    nexty = ship.yposition + (math.sin(ship.rotation) * ship.cur_speed)
     if (general.valid_position(nextx, nexty) and ship.moving) then
-      new_rotation = math.asin(ship.up_speed_scale * (math.sin(rotation_from_ship)/shot_speed)) + rotation_to_ship
+      new_rotation = math.asin(ship.cur_speed * (math.sin(rotation_from_ship)/shot_speed)) + rotation_to_ship
     else
       new_rotation = rotation_to_ship
     end

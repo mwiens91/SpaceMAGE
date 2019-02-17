@@ -50,6 +50,7 @@ function love.load()
 
   -- Build up a table of SFX
   sfx = {}
+  sfx["beep_01"] = love.audio.newSource("media/audio/sfx/beep01.ogg", "static")
   sfx["menu_long_01"] = love.audio.newSource("media/audio/sfx/menu_long_01.ogg", "static")
   sfx["menu_short_01"] = love.audio.newSource("media/audio/sfx/menu_short_01.ogg", "static")
   sfx["menu_short_02"] = love.audio.newSource("media/audio/sfx/menu_short_02.ogg", "static")
@@ -101,9 +102,12 @@ function love.update(dt)
 
       if not (msg == nil) then
         drones.push_message(msg)
+
+        local beep_sound = sfx["beep_01"]:clone()
+        beep_sound:play()
       end
 
-    msg_timer = msg_timer - msg_cycle
+      msg_timer = msg_timer - msg_cycle
 
     end
   end

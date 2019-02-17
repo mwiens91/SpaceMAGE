@@ -199,6 +199,14 @@ function weapons.reflector.got_hit(damage)
   print(string.format("Shield Remaining = %d", weapons.reflector.current_health))
 end
 
+function weapons.stasis.get_hit_box()
+  leftx = weapons.stasis.xposition - (weapons.stasis.width/2)*.8
+  rightx = weapons.stasis.xposition + (weapons.stasis.width/2)*.8
+  topy = weapons.stasis.yposition - (weapons.stasis.height/2)*.8
+  bottomy = weapons.stasis.yposition + (weapons.stasis.height/2)*.8
+  return leftx, rightx, topy, bottomy
+end
+
 -- Returns true if can use reflector, false otherwise
 function weapons.has_reflector()
  return weapons.reflector

@@ -54,6 +54,7 @@ function love.load()
   font_default = love.graphics.newFont(FONT_PATH, DEFAULT_FONT_SIZE)
   font_log = love.graphics.newFont(FONT_PATH, LOG_FONT_SIZE)
   font_quote = love.graphics.newFont(FONT_PATH, QUOTE_FONT_SIZE)
+  font_shields = love.graphics.newFont(FONT_PATH, SHIELDS_FONT_SIZE)
   font_title = love.graphics.newFont(FONT_PATH, TITLE_FONT_SIZE)
 
   -- Load ship
@@ -123,6 +124,17 @@ function love.draw()
       end
     end
 
+    -- Show shields
+    love.graphics.setFont(font_shields)
+    love.graphics.setColor(0, 0, 1, 1)
+
+    love.graphics.printf(
+      "SHIELDS:" .. ship.get_current_health() / ship.get_max_health() * 100 .. "%",
+      10,
+      10,
+      GAME_WIDTH,
+      "left"
+    )
 
     love.graphics.setFont(font_default)
     love.graphics.setColor(1, 1, 1, 1)

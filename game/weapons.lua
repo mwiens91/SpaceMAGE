@@ -15,7 +15,8 @@ local weapons = {
     yposition = 0,
     rotation = 0,
 
-    health = 2,
+    current_health = 30,
+    max_health = 30,
     cooldown = 3, -- seconds till can use again after use
     current_cooldown = 3,
 
@@ -116,24 +117,35 @@ function weapons.reflector.get_hit_box()
   return leftx1, rightx1, topy1, bottomy1, leftx2, rightx2, topy2, bottomy2
 end
 
+function weapons.reflector.got_hit(damage)
+  weapons.reflector.current_health = weapons.reflector.current_health - damage
+  print(string.format("Shield Remaining = %d", weapons.reflector.current_health))
+end
+
 -- Returns true if can use reflector, false otherwise
 function weapons.has_reflector()
+ return weapons.reflector
 end
 
 function weapons.has_stasis()
+  return weapons.stasis
 end
 
 function weapons.has_emp()
+  return weapons.emp
 end
 
 -- Enable or disable weapons, true to enable
 function weapons.set_reflector_permit(value)
+  weapons.reflector = value
 end
 
 function weapons.set_stasis_permit(value)
+  weapons.stasis = value
 end
 
 function weapons.set_emp_permit(value)
+ weapons.emp = value
 end
 
 return weapons

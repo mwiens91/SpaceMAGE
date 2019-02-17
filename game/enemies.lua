@@ -54,7 +54,9 @@ function enemies.shoot(enemy, rotation_to_ship)
     new_rotation = rotation_to_ship
   end
 
-  projectiles.projectile_init(enemy.x, enemy.y, new_rotation, enemy.e_type)
+  cannon_x = enemy.x + enemy.width/2 * math.cos(rotation_to_ship)
+  cannon_y = enemy.y + enemy.width/2 * math.sin(rotation_to_ship)
+  projectiles.projectile_init(cannon_x, cannon_y, new_rotation, enemy.e_type)
 end
 
 function enemies.enemy_init(x, y, e_type)

@@ -7,8 +7,6 @@ local enemies = {
 
 }
 
-ENEMY_SHIP_COLOR = {1.0, 1.0, 1.0}
-
 function enemies.load()
   enemies.init()
   enemies.enemy_init(700,300,1)
@@ -23,9 +21,18 @@ end
 
 function enemies.update(dt)
   for i, enemy in ipairs(enemy_ships) do
+
+    local diff_x = (ship.xposition - enemy.x)
+    local diff_y = (ship.yposition - enemy.y)
+    local rotation_to_ship = math.atan(diff_y/diff_x)
+    if diff_x < 0 then
+      rotation_to_ship = rotation_to_ship + math.pi
+    end
+    enemy.rotation = rotation_to_ship
+
     enemy.last_shot = enemy.last_shot + dt
     if enemy.last_shot > enemy_ship.shot_delay then
-      enemies.shoot(enemy)
+      enemies.shoot(enemy, rotation_to_ship)
       enemy.last_shot = 0
     end
   end
@@ -34,15 +41,9 @@ function enemies.update(dt)
 
 end
 
-function enemies.shoot(enemy)
-  local diff_x = (ship.xposition - enemy.x)
-  local diff_y = (ship.yposition - enemy.y)
+function enemies.shoot(enemy, rotation_to_ship)
   local shot_speed = projectiles.p_speed[enemy.e_type]
-  local rotation_to_ship = math.atan(diff_y/diff_x)
 
-  if diff_x < 0 then
-    rotation_to_ship = rotation_to_ship + math.pi
-  end
   local rotation_from_ship = (rotation_to_ship+math.pi) - ship.rotation
   local new_rotation
   nextx = ship.xposition + (math.cos(ship.rotation) * ship.up_speed_scale)

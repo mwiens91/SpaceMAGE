@@ -26,7 +26,7 @@ MAX_DRONE_MESSAGES = 7
 MAXIMIZE_NULL = "null"
 MAXIMIZE_DRONE_POPULATION = "maximize_drone_population"
 MAXIMIZE_WEAPONS_TECHNOLOGY = "maximize_technology"
-MAXIMIZE_SHIP_EFFICACY = "maximize_ship_statistics"
+MAXIMIZE_SHIP_EFFICACY = "maximize_ship_efficacy"
 
 -- Drone strategies
 RANDOM_STRATEGY = "random"

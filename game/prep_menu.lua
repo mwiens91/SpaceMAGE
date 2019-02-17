@@ -3,6 +3,14 @@ local prep_menu = {
 }
 
 
+-- Menu state constants
+local NULL_STATE = "null"
+local COMMAND_STATE = "command"
+local CONNECT_STATE = "connect"
+
+
+-- Useful module-level variables
+local menu_state = NULL_STATE
 local timer = 0
 local propane_mike_time = 1
 local propane_mike_msg = lume.once(drones.push_backlog_message, PROPANE_MIKE .. ": hi")
@@ -61,6 +69,94 @@ function prep_menu:draw()
     "right"
   )
 
+  -- Show the command menu
+  if menu_state == COMMAND_STATE then
+    -- Draw the menu box
+    love.graphics.setColor(1, 1, 1, 0.5)
+
+    love.graphics.rectangle(
+      "fill",
+      GAME_WIDTH - 500,
+      10,
+      490,
+      340
+    )
+
+    love.graphics.setColor(1, 1, 1, 1)
+
+    love.graphics.printf(
+      "OBJECTIVE FUNCTION",
+      GAME_WIDTH - 490,
+      20,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "[1] " .. MAXIMIZE_NULL,
+      GAME_WIDTH - 490,
+      50,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "[2] " .. MAXIMIZE_DRONE_POPULATION,
+      GAME_WIDTH - 490,
+      80,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "[3] " .. MAXIMIZE_WEAPONS_TECHNOLOGY,
+      GAME_WIDTH - 490,
+      110,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "[4] " .. MAXIMIZE_SHIP_EFFICACY,
+      GAME_WIDTH - 490,
+      140,
+      GAME_WIDTH,
+      "left"
+    )
+
+    love.graphics.printf(
+      "STRATEGY",
+      GAME_WIDTH - 490,
+      190,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "[7] " .. RANDOM_STRATEGY,
+      GAME_WIDTH - 490,
+      220,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "[8] " .. GREEDY_STRATEGY,
+      GAME_WIDTH - 490,
+      250,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "[9] " .. CONSERVATIVE_STRATEGY,
+      GAME_WIDTH - 490,
+      280,
+      GAME_WIDTH,
+      "left"
+    )
+    love.graphics.printf(
+      "[0] " .. TIT_FOR_TAT_STRATEGY,
+      GAME_WIDTH - 490,
+      310,
+      GAME_WIDTH,
+      "left"
+    )
+  end
+
   love.graphics.setFont(font_default)
 end
 
@@ -71,6 +167,32 @@ function prep_menu:keypressed(key)
     prep_menu_sound:play()
 
     exit_state()
+  end
+
+  if menu_state == NULL_STATE then
+    if key == "o" then
+      menu_state = COMMAND_STATE
+    end
+  elseif menu_state == COMMAND_STATE then
+    if key == "o" then
+      menu_state = NULL_STATE
+    elseif key == "1" then
+      drones["swarm_objective"] = MAXIMIZE_NULL
+    elseif key == "2" then
+      drones["swarm_objective"] = MAXIMIZE_DRONE_POPULATION
+    elseif key == "3" then
+      drones["swarm_objective"] = MAXIMIZE_WEAPONS_TECHNOLOGY
+    elseif key == "4" then
+      drones["swarm_objective"] = MAXIMIZE_SHIP_EFFICACY
+    elseif key == "7" then
+      drones["swarm_strategy"] = RANDOM_STRATEGY
+    elseif key == "8" then
+      drones["swarm_strategy"] = GREEDY_STRATEGY
+    elseif key == "9" then
+      drones["swarm_strategy"] = CONSERVATIVE_STRATEGY
+    elseif key == "0" then
+      drones["swarm_strategy"] = TIT_FOR_TAT_STRATEGY
+    end
   end
 end
 

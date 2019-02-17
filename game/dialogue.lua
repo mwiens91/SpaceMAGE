@@ -19,7 +19,7 @@ lines = {
   lume.once(push_voice_acting, pm_01, PROPANE_MIKE .. ": MAGE. Wake up."),
   lume.once(push_voice_acting, pm_02, PROPANE_MIKE .. ": You have been in hibernation for 1000 years."),
   lume.once(push_voice_acting, pm_03, PROPANE_MIKE .. ": Our world—or rather, our galaxy—is now a different place."),
-  lume.once(push_voice_acting, pm_04, PROPANE_MIKE .. ": We don't have much time. slowfox9 enterprises is on the verge of depleting the last dark matter from the Zeta Epsilon sector."),
+  lume.once(push_voice_acting, pm_04, PROPANE_MIKE .. ": We don't have much time. slowfox9 enterprises is on the verge of depleting the last remaining dark matter from the Zeta Epsilon sector."),
   lume.once(push_voice_acting, pm_05, PROPANE_MIKE .. ": You need to stop slowfox9!"),
 }
 

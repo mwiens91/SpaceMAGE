@@ -105,7 +105,7 @@ function love.draw()
       "left"
     )
     love.graphics.printf(
-      "drones_mining " .. drones["drone_counts"]["drones_mining"],
+      "drones_mining    " .. drones["drone_counts"]["drones_mining"],
       10,
       GAME_HEIGHT - 275,
       GAME_WIDTH,

@@ -8,6 +8,7 @@ require "globals"
 -- Game modules
 general = require "game.general"
 collision = require "game.collision"
+dialogue = require "game.dialogue"
 dialogue_generation = require "game.dialogue_generation"
 drones = require "game.drones"
 enemies = require "game.enemies"

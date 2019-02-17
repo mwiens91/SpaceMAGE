@@ -17,6 +17,8 @@ local propane_mike_msg = lume.once(
   drones.push_backlog_message,
   PROPANE_MIKE .. ": MAGE, call me :)"
 )
+local propane_mike_call = false
+local propane_mike_call_timer = 0
 
 
 -- Particle system to make menu more interesting
@@ -53,8 +55,14 @@ function prep_menu:update(dt)
 
   timer = timer + dt
 
-  if timer > propane_mike_time then
+  if timer > propane_mike_time and not propane_mike_call then
     propane_mike_msg()
+  end
+
+  if propane_mike_call then
+    propane_mike_call_timer = propane_mike_call_timer + dt
+
+    dialogue.update(propane_mike_call_timer)
   end
 
   if ship.start_main_menu then
@@ -280,6 +288,7 @@ function prep_menu:keypressed(key)
       prep_menu_sound2:play()
     elseif key == "1" then
       prep_menu_sound3:play()
+      propane_mike_call = true
     end
   end
 end

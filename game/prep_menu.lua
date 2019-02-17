@@ -19,6 +19,16 @@ local propane_mike_msg = lume.once(
 )
 
 
+-- Particle system to make menu more interesting
+local particle_img = love.graphics.newImage("/media/img/ship.png")
+psystem = love.graphics.newParticleSystem(particle_img, 70)
+psystem:setParticleLifetime(2, 20) -- Particles live at least 2s and at most 5s.
+psystem:setLinearAcceleration(-100, -100, 100, 100)
+psystem:setRotation(0, math.pi*2)
+psystem:setSpin(-0.5, 0.5)
+psystem:setColors(0.3, 0.3, 0.3, 1, 0, 0, 0, 1) -- Fade to black.
+
+
 -- Clean up this state and move to the next
 local function exit_state()
   -- Stop the music
@@ -51,11 +61,16 @@ function prep_menu:update(dt)
     ship.start_menu()
   end
 
+  psystem:update(dt)
+  psystem:emit(2)
   ship.update(dt)
 end
 
 
 function prep_menu:draw()
+  -- Draw particles
+  love.graphics.draw(psystem, GAME_WIDTH * 0.5, GAME_HEIGHT * 0.5)
+
   -- Draw ship
   ship.draw()
 

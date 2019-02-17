@@ -29,8 +29,8 @@ end
 
 function planets.update(dt)
   planet.x = planet.x - SCROLLING_SPEED
-  if planet_x <= GAME_WIDTH then
-    planet_x = GAME_WIDTH
+  if planet.x <= GAME_WIDTH then
+    planet.x = GAME_WIDTH
   end
 end
 

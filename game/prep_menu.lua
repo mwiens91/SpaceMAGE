@@ -26,6 +26,9 @@ local function exit_state()
 
   -- Set the next state
   current_state = "space_combat"
+  if ship.start_new_level then
+    ship.start_level()
+  end
 end
 
 
@@ -43,10 +46,19 @@ function prep_menu:update(dt)
   if timer > propane_mike_time then
     propane_mike_msg()
   end
+
+  if ship.start_main_menu then
+    ship.start_menu()
+  end
+
+  ship.update(dt)
 end
 
 
 function prep_menu:draw()
+  -- Draw ship
+  ship.draw()
+
   -- Draw the title screen menu
   love.graphics.setFont(font_menu)
 

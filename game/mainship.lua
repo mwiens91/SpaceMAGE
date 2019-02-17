@@ -1,5 +1,7 @@
 local ship = {
   is_loaded = false,
+  start_new_level = true,
+  start_main_menu = true,
 
   xposition = 30,
   yposition = GAME_HEIGHT/2,
@@ -108,6 +110,34 @@ function ship.update(dt)
   if love.keyboard.isDown("right") or love.keyboard.isDown("d") then
     ship.rotation = ship.rotation + 0.01 * ship.rot_speed_scale
   end
+end
+
+function ship.start_level()
+  ship.xposition = 30
+  ship.yposition = GAME_HEIGHT/2
+  ship.rotation = 0
+  ship.moving = false
+  
+  ship.cur_speed = 0
+
+  ship.current_health = ship.max_health
+  ship.current_heat = 0
+
+  ship.start_new_level = false
+end
+
+function ship.start_menu()
+  ship.xposition = GAME_WIDTH/2
+  ship.yposition = GAME_HEIGHT/2
+  ship.rotation = 0
+  ship.moving = false
+  
+  ship.cur_speed = 0
+
+  ship.current_health = ship.max_health
+  ship.current_heat = 0
+
+  ship.start_main_menu = false
 end
 
 -- Return top left coordinates of hitbox and width and height

@@ -19,10 +19,13 @@ lines = {
   lume.once(push_voice_acting, pm_01, PROPANE_MIKE .. ": MAGE. Wake up."),
   lume.once(push_voice_acting, pm_02, PROPANE_MIKE .. ": You have been in hibernation for 1000 years."),
   lume.once(push_voice_acting, pm_03, PROPANE_MIKE .. ": Our world—or rather, our galaxy—is now a different place."),
-  lume.once(push_voice_acting, pm_04, PROPANE_MIKE .. ": We don't have much time. slowfox9 enterprises is on the verge of depleting the last remaining dark matter from the Zeta Epsilon sector."),
+  lume.once(push_voice_acting, pm_04, PROPANE_MIKE .. ": We don't have much time."),
   lume.once(push_voice_acting, pm_05, PROPANE_MIKE .. ": You need to stop slowfox9!"),
 }
 
+-- TODO do this a better way
+local l4_extra_text_01 = lume.once(drones.push_backlog_message, "\tslowfox9 enterprises is on the verge of depleting")
+local l4_extra_text_02 = lume.once(drones.push_backlog_message, "\tthe last remaining dark matter in the Zeta Epsilon sector.")
 
 function dialogue.update(time)
   lines[1]()
@@ -37,6 +40,8 @@ function dialogue.update(time)
 
   if time > 11 then
     lines[4]()
+    l4_extra_text_01()
+    l4_extra_text_02()
   end
 
   if time > 21 then

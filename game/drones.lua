@@ -16,6 +16,9 @@ local drones = {
   -- Drone message log
   drone_log = {},
 
+  -- Drone message backlog
+  drone_backlog = {},
+
   -- Remember the last N drone counts drone counts
   drone_count_queue = {}
 }
@@ -28,6 +31,11 @@ function drones.push_message(msg)
   if #drones["drone_log"] > MAX_DRONE_MESSAGES then
     table.remove(drones["drone_log"], 1)
   end
+end
+
+-- Push a message to the drone backlog
+function drones.push_backlog_message(msg)
+  lume.push(drones["drone_backlog"], msg)
 end
 
 

@@ -5,7 +5,7 @@ local prep_menu = {
 
 local timer = 0
 local propane_mike_time = 1
-local propane_mike_msg = lume.once(drones.push_message, PROPANE_MIKE .. ": hi")
+local propane_mike_msg = lume.once(drones.push_backlog_message, PROPANE_MIKE .. ": hi")
 
 
 -- Clean up this state and move to the next

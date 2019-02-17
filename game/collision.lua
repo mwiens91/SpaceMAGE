@@ -30,10 +30,17 @@ function collision.check_reflector(proj_index)
   cond6 = proj_leftx <= rightx2
   cond7 = topy2 <= proj_bottomy
   cond8 = proj_topy <= bottomy2
-  if ((cond1 and cond2 and cond3 and cond4) or (cond5 and cond6 and cond7 and cond8)) then
-    --print("SHIELD HIT")
-    weapons.reflector.got_hit(proj.damage)
-    all_projectiles[proj_index].rotation = 2*weapons.reflector.rotation - all_projectiles[proj_index].rotation + math.pi
+  if weapons.reflector.hit_recover == false and (((cond1 and cond2 and cond3 and cond4) or (cond5 and cond6 and cond7 and cond8))) then
+    the_proj = all_projectiles[proj_index]
+    print("SHIELD HIT")
+    weapons.reflector.got_hit(the_proj.damage)
+    if(the_proj.p_type == 1) then
+      the_proj.rotation = 2*weapons.reflector.rotation - the_proj.rotation + math.pi
+    elseif(the_proj.p_type == 2) then
+      table.remove(all_projectiles, proj_index)
+      --projectiles.cause_explosion(the_proj.x, the_proj.y)
+    end
+
     return true
   end
   return false

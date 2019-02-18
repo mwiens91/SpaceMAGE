@@ -470,7 +470,7 @@ end
 
 
 function drones.update_levels()
-  if drones["heat_sink_xp"] >= XP_PER_LEVEL then
+  if drones["heat_sink_xp"] >= XP_PER_LEVEL and #drones.drone_clusters.clusters_mining ~= 0  then
     ship.set_max_heat(1.1 * ship.get_max_heat())
 
     -- Push message to backlog
@@ -481,7 +481,7 @@ function drones.update_levels()
     drones["heat_sink_xp"] = drones["heat_sink_xp"] -  XP_PER_LEVEL
   end
 
-  if drones["shields_xp"] >= XP_PER_LEVEL then
+  if drones["shields_xp"] >= XP_PER_LEVEL and #drones.drone_clusters.clusters_exploration ~= 0 then
     -- Increase level
     ship.set_max_health(1.1 * ship.get_max_health())
     ship.set_health_regen(1.1 * ship.get_health_regen())

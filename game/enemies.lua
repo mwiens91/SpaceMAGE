@@ -8,46 +8,51 @@ local enemies = {
   shot_delay = {2, 8,},
   speed = {1, 1,},
   max_health = {50, 50,},
+  too_close = 100
 
 }
 
 function enemies.load(stage)
   enemies.init()
-  local planet_leftx = planet.x - planet.width
   if stage == 'space_combat' then
     for i = 1, space_combat.num_laser_ships do
-      rand_x = planet_leftx - math.random()*planet_leftx/2
-      rand_y = math.random() * GAME_HEIGHT
-      for i, enemy in ipairs(enemy_ships) do
-        while enemies.are_close(rand_x, rand_y, enemy.x, enemy.y) do
-          rand_x = planet_leftx - math.random()*planet_leftx/2
-          rand_y = math.random() * GAME_HEIGHT
+      local too_close = true
+      while too_close do
+        too_close = false 
+        rand_x = math.random(GAME_WIDTH, (planet.x - planet.width))
+        rand_y = math.random(0, GAME_HEIGHT)
+        for i, enemy in ipairs(enemy_ships) do
+          if enemies.are_close(rand_x, rand_y, enemy.x, enemy.y) then
+            too_close = true
+          end
         end
       end
       enemies.enemy_init(rand_x, rand_y, 1)
     end
 
     for i = 1, space_combat.num_missile_launchers do
-      rand_x = planet_leftx - math.random()*planet_leftx/2
-      rand_y = math.random() * GAME_HEIGHT
-      for i, enemy in ipairs(enemy_ships) do
-        while enemies.are_close(rand_x, rand_y, enemy.x, enemy.y) do
-          rand_x = planet_leftx - math.random()*planet_leftx/2
-          rand_y = math.random() * GAME_HEIGHT
+      local too_close = true
+      while too_close do
+        too_close = false
+        rand_x = math.random(GAME_WIDTH, (planet.x - planet.width))
+        rand_y = math.random(0, GAME_HEIGHT)
+        for i, enemy in ipairs(enemy_ships) do
+          if enemies.are_close(rand_x, rand_y, enemy.x, enemy.y) then
+            too_close = true
+          end
         end
       end
       enemies.enemy_init(rand_x, rand_y, 2)
     end
-    --enemies.enemy_init(700,200,1)
-    --enemies.enemy_init(600,400,2)
-    --enemies.enemy_init(500,500)
-    --enemies.enemy_init(300,100)
   end
   enemies.is_loaded = true
 end
 
 function enemies.are_close(x1, y1, x2, y2)
-  if(math.abs(x1-x2) < 150 and math.abs(y1-y2) < 150) then
+  x_squared = math.abs(x1-x2) * math.abs(x1-x2)
+  y_squared = math.abs(y1-y2) * math.abs(y1-y2)
+  distance = math.sqrt(x_squared + y_squared)
+  if(distance < enemies.too_close) then
     return true
   else
     return false

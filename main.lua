@@ -130,11 +130,11 @@ function love.update(dt)
 
       morale_timer = morale_timer - morale_cycle
     end
+  end
 
-    -- Load the update function for the state we're in
-    if states[current_state] ~= nil then
-      states[current_state]:update(dt)
-    end
+  -- Load the update function for the state we're in
+  if states[current_state] ~= nil then
+    states[current_state]:update(dt)
   end
 end
 

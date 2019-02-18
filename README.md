@@ -34,3 +34,6 @@ Then, from the root of the repository, run
 ```
 love .
 ```
+
+There are also precompiled binaries for Linux and Windows in
+[`bin`](bin).

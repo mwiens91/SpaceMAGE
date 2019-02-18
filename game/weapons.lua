@@ -208,13 +208,13 @@ function weapons.draw()
     	               weapons.reflector.yposition, weapons.reflector.rotation, 1, 1,
     	               weapons.reflector.width/2, weapons.reflector.height/2)
 
-    z1,z2,z3,z4,c1,c2,c3,c4 = weapons.reflector.get_hit_box()
+    --z1,z2,z3,z4,c1,c2,c3,c4 = weapons.reflector.get_hit_box()
 
-    love.graphics.setColor(1,1,1,.7)
-    love.graphics.rectangle("fill", z1, z3, math.abs(z1-z2), math.abs(z3-z4))
-    love.graphics.setColor(1,.2,.2,.7)
-    love.graphics.rectangle("fill", c1, c3, math.abs(c1-c2), math.abs(c3-c4))
-    love.graphics.setColor(1,1,1,1)
+    --love.graphics.setColor(1,1,1,.7)
+    --love.graphics.rectangle("fill", z1, z3, math.abs(z1-z2), math.abs(z3-z4))
+    --love.graphics.setColor(1,.2,.2,.7)
+    --love.graphics.rectangle("fill", c1, c3, math.abs(c1-c2), math.abs(c3-c4))
+    --love.graphics.setColor(1,1,1,1)
   end
 
   -- Draw Stasis

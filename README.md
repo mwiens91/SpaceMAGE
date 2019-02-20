@@ -10,6 +10,12 @@ of the galaxy, the galaxy needs a hero to fight for humanity's survival.
 In a desperate measure, propanemike 01 awakens MAGE, a venture
 capitalist from the old days, to fight the AI.
 
+## Watch it!
+
+Click the thumbnail below!
+
+[![space_MAGE_ preview video](http://img.youtube.com/vi/Rj63bC1hwIc/0.jpg)](http://www.youtube.com/watch?v=Rj63bC1hwIc "space_MAGE_ preview")
+
 ## BC Game Jam '19
 
 This game was made during [BC Game Jam '19](https://bcgamejam.com/) by

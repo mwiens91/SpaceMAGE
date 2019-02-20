@@ -7,8 +7,9 @@ economy and have one objective: gather energy. With suns being leeched
 of light and dark matter extraction disturbing the gravitational makeup
 of the galaxy, the galaxy needs a hero to fight for humanity's survival.
 
-In a desperate measure, propanemike 01 awakens MAGE, a venture
-capitalist from the old days, to fight the AI.
+In a desperate measure, propanemike01 awakens MAGE, a venture capitalist
+from the old days, to fight the central AI cluster bringing ruin to the
+galaxy.
 
 ## Watch it!
 
